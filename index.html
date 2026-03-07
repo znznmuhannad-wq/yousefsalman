@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Y.S Cut | Yousef Salman Portfolio</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;700&family=Oswald:wght@200;300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>    
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+      :root {
+        --bg-primary: #050505;
+        --bg-secondary: #0A0A0A;
+        --bg-soft: #121212;
+        --border-color: rgba(255, 255, 255, 0.08);
+        --accent: #E7A51A;
+        --text-main: #FFFFFF;
+        --text-muted: rgba(255, 255, 255, 0.55);
+      }
+
+      body {
+        background-color: var(--bg-primary);
+        color: var(--text-main);
+        font-family: 'Inter', sans-serif;
+        overflow-x: hidden;
+        -webkit-tap-highlight-color: transparent;
+        font-size: 20px;
+        line-height: 1.8;
+      }
+
+      .font-montserrat {
+        font-family: 'Montserrat', sans-serif;
+      }
+
+      /* Unified Section Header System - MODIFIED FOR TASK 1 */
+    .section-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin-bottom: 0.5rem;
+      text-align: center;
+      overflow: visible;
+      padding: 0 1rem;
+    }
+
+  .chapter-number {
+    -webkit-text-stroke: 1px rgba(255,255,255,0.15);
+    color: transparent;
+    font-family: 'Anton', sans-serif;
+    margin: 0 auto;
+    margin-bottom: -0.3em;
+    margin-top: 0;
+    line-height: 0.75;
+    display: inline-block;
+    position: relative;
+    z-index: 0;
+  }
+
+      .section-title {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: var(--text-main);
+        position: relative;
+        z-index: 10;
+      }
+
+      /* Premium Glass Card System */
+      .glass-card {
+        background: rgba(20, 20, 20, 0.4);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border: 1px solid var(--border-color);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        transition: border-color 0.3s ease, background 0.3s ease;
+      }
+      
+      .inner-glow {
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, transparent 50%);
+        z-index: 0;
+      }
+
+      .font-credits { font-family: 'Oswald', sans-serif; }
+      .font-mono-code { font-family: 'Space Mono', monospace; }
+      .font-handwriting { font-family: 'Caveat', cursive; }
+
+      /* Film Grain Overlay */
+      .film-grain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.015'/%3E%3C/svg%3E");
+        z-index: 100;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar { width: 4px; }
+      ::-webkit-scrollbar-track { background: var(--bg-primary); }
+      ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+
+      /* Ambient Lights */
+      .spotlight {
+        position: absolute;
+        width: 700px;
+        height: 700px;
+        background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+        filter: blur(40px);
+        pointer-events: none;
+      }
+
+      @keyframes scanline {
+        0% { transform: translateY(-100%); }
+        100% { transform: translateY(100%); }
+      }
+      
+      .scanline {
+        width: 100%;
+        height: 100px;
+        background: linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0) 100%);
+        position: absolute;
+        animation: scanline 8s linear infinite;
+        pointer-events: none;
+      }
+
+      .light-leak {
+        position:absolute;
+        width:800px;
+        height:800px;
+        pointer-events:none;
+        filter: blur(120px);
+        opacity:0.45;
+      }
+      .light-orange { background: radial-gradient(circle, rgba(231,165,26,0.2) 0%, rgba(231,165,26,0.05) 35%, transparent 70%); }
+      .light-yellow { background: radial-gradient(circle, rgba(231,165,26,0.2) 0%, rgba(231,165,26,0.05) 35%, transparent 70%); }
+
+      h4, h5, h6 { font-family: 'Oswald', sans-serif; }
+
+      .skills-grain {
+        position:absolute; inset:0; pointer-events:none; opacity:0.08; mix-blend-mode:overlay;
+        background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      }
+
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+      /* CINEMATIC STACK */
+      .cinematic-portfolio-wrapper {
+        --bg-deep: var(--bg-primary);
+        background-color: var(--bg-deep);
+        color: var(--text-main);
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        overflow: hidden;
+        height: 100dvh;
+        width: 100%;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(circle at 50% 50%, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+      }
+
+      .cinematic-portfolio-wrapper .ambient-glow {
+        position: absolute; width: 60vw; height: 60vw;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.02) 0%, transparent 70%);
+        top: 50%; left: 50%; transform: translate(-50%, -50%);
+        pointer-events: none; z-index: 0;
+      }
+
+      .cinematic-portfolio-wrapper .title-mono {
+        font-family: 'Montserrat', sans-serif;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+      }
+
+      .cinematic-portfolio-wrapper .viewport {
+        position: relative; width: 100%; height: 70vh; display: flex;
+        align-items: center; justify-content: center;
+        perspective: 1200px; touch-action: none; overflow: visible;
+      }
+
+      .cinematic-portfolio-wrapper .card {
+        position: absolute; width: 300px; height: 450px; border-radius: 32px;
+        overflow: hidden; display: flex; flex-direction: column; cursor: grab;
+        user-select: none; will-change: transform, opacity, filter;
+      }
+
+      @media (min-width: 768px) {
+        .cinematic-portfolio-wrapper .card { width: 420px; height: 560px; }
+      }
+
+      .cinematic-portfolio-wrapper .card:active { cursor: grabbing; }
+
+      .cinematic-portfolio-wrapper .image-wrapper {
+        width: 100%; height: 55%; position: relative; overflow: hidden; border-radius: 24px 24px 0 0;
+      }
+
+      .cinematic-portfolio-wrapper .image-wrapper img {
+        width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.2, 0, 0.2, 1);
+      }
+
+      .cinematic-portfolio-wrapper .card:hover .image-wrapper img { transform: scale(1.05); }
+
+      .cinematic-portfolio-wrapper .pill {
+        background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(10px); padding: 4px 12px; border-radius: 100px;
+        font-size: 0.6rem; font-weight: 600; letter-spacing: 0.05em; color: var(--text-muted);
+        text-transform: uppercase;
+      }
+
+      .cinematic-portfolio-wrapper .nav-dots { position: absolute; bottom: 30px; display: flex; gap: 10px; z-index: 20; }
+      .cinematic-portfolio-wrapper .dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255, 255, 255, 0.2); transition: all 0.4s ease; }
+      .cinematic-portfolio-wrapper .dot.active { background: #fff; transform: scale(2); box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); }
+      .cinematic-portfolio-wrapper .scroll-hint { position: absolute; bottom: 15px; font-size: 0.65rem; opacity: 0.3; letter-spacing: 0.2em; text-transform: uppercase; }
+
+      /* MEMORIES ANIMATION STYLES */
+      @keyframes marquee-left {
+        0% { transform: translateX(0%); }
+        100% { transform: translateX(-50%); }
+      }
+      @keyframes marquee-right {
+        0% { transform: translateX(-50%); }
+        100% { transform: translateX(0%); }
+      }
+      .animate-track-left { animation: marquee-left 45s linear infinite; }
+      .animate-track-right { animation: marquee-right 55s linear infinite; }
+      .memory-row:hover .animate-track-left,
+      .memory-row:hover .animate-track-right {
+        animation-play-state: paused;
+      }
+      
+      .memory-item {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+        transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      .memory-item img {
+        transition: transform 0.7s, filter 0.5s;
+      }
+      .memory-item:hover {
+        border-color: var(--accent);
+        z-index: 10;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+        transform: scale(1.05);
+      }
+      .memory-item:hover img {
+        transform: scale(1.1);
+        filter: grayscale(0%) brightness(1.1) contrast(1.1) !important;
+      }
+      .memory-overlay-vignette {
+        background: radial-gradient(circle at center, transparent 30%, var(--bg-primary) 100%);
+      }
+
+      /* B3EED PREMIUM MOTION STYLES */
+      @keyframes lightSweep {
+        0% { background-position: -200% center; }
+        100% { background-position: 200% center; }
+      }
+      .b3eed-sweep {
+        position: absolute; inset: 0; pointer-events: none; z-index: 0;
+        background: linear-gradient(90deg, transparent, rgba(231,165,26,0.04), transparent);
+        background-size: 50% 100%;
+        background-repeat: no-repeat;
+        animation: lightSweep 12s infinite linear;
+      }
+
+      /* B3EED BTS STRIP ANIMATION */
+      @keyframes bts-scroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+      }
+      .bts-track { animation: bts-scroll 60s linear infinite; display: flex; width: max-content; }
+      .b3eed-section:hover .bts-track { animation-play-state: paused; }
+    </style>
+</head>
+<body class="antialiased selection:bg-[#E7A51A] selection:text-black">
+
+    <div class="film-grain"></div>
+
+    <nav class="fixed top-0 left-0 w-full p-4 md:p-8 z-[200] flex justify-between items-start mix-blend-difference pointer-events-none">
+        <div class="relative flex flex-col pointer-events-auto">
+            <button id="menu-toggle" class="font-credits text-lg md:text-xl tracking-[0.3em] font-bold text-white hover:text-[#E7A51A] transition-colors flex items-center gap-2 focus:outline-none">
+                YS.CUT
+                <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300" id="menu-arrow"></i>
+            </button>
+            
+            <div id="dropdown-menu" class="absolute top-full mt-4 left-0 w-48 bg-[#050505]/95 backdrop-blur-xl border border-[rgba(255,255,255,0.08)] rounded-xl overflow-hidden opacity-0 pointer-events-none transform -translate-y-4 transition-all duration-300 z-[210] shadow-2xl">
+                <ul class="flex flex-col py-2 font-mono-code text-xs tracking-[0.2em] uppercase text-white/70">
+                    <li><a href="#about" class="block px-6 py-3 hover:bg-white/5 hover:text-[#E7A51A] transition-colors">About</a></li>
+                    <li><a href="#graduation" class="block px-6 py-3 hover:bg-white/5 hover:text-[#E7A51A] transition-colors">Education</a></li>
+                    <li><a href="#skills" class="block px-6 py-3 hover:bg-white/5 hover:text-[#E7A51A] transition-colors">Skills</a></li>
+                    <li><a href="#portfolio" class="block px-6 py-3 hover:bg-white/5 hover:text-[#E7A51A] transition-colors">Portfolio</a></li>
+                    <li><a href="#b3eed" class="block px-6 py-3 hover:bg-white/5 hover:text-[#E7A51A] transition-colors">B3EED</a></li>
+                    <li><a href="#memories" class="block px-6 py-3 hover:bg-white/5 hover:text-[#E7A51A] transition-colors">Memories</a></li>
+                    <li><a href="#contact" class="block px-6 py-3 hover:bg-white/5 hover:text-[#E7A51A] transition-colors">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-6 pointer-events-auto mt-1 md:mt-0">
+            <div class="hidden md:flex items-center gap-4">
+                <div class="font-credits text-[10px] tracking-[0.2em] border border-white/30 px-3 py-1 rounded-full text-white/70">
+                    WORLDWIDE PROJECTS
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-[#E7A51A] rounded-full animate-pulse"></div>
+                <span class="font-mono-code text-sm">LIVE</span>
+            </div>
+        </div>
+    </nav>
+
+    <section id="hero" class="h-screen w-full flex flex-col justify-center items-center relative overflow-hidden bg-[#050505]">
+        <div class="absolute inset-0 z-0 bg-cover bg-center opacity-30 scale-105" id="hero-bg" style="background-image: url('https://i.ibb.co/mV0KKvyt/Whats-App-Image-2025-12-05-at-12-07-19-AM-2.jpg');"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-transparent z-10"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,#050505_100%)] z-10 pointer-events-none"></div>
+        
+        <div class="scanline z-10"></div>
+        <div class="spotlight top-[-200px] left-[30%]"></div>
+        
+        <div class="z-20 text-center px-4">
+            <div class="light-leak light-orange" style="top:-200px; right:-200px;"></div>
+            <div class="light-leak light-yellow" style="bottom:-200px; left:-200px;"></div>
+
+            <h2 class="font-credits text-white/60 tracking-[0.5em] text-lg md:text-xl mb-4 opacity-0 hero-anim" style="transform: translateY(20px);">STARRING YOUSEF SALMAN</h2>
+            <h1 class="text-7xl sm:text-8xl md:text-[9rem] lg:text-[13rem] mb-2 opacity-0 hero-anim leading-none text-[#E7A51A] tracking-wider" style="font-family: 'Anton', sans-serif;">THE Y.S CUT</h1>
+            
+            <div class="flex flex-col md:flex-row gap-4 md:gap-12 justify-center items-center mt-6 md:mt-12 opacity-0 hero-anim" style="transform: translateY(40px);">
+                <div class="flex items-center gap-2 group">
+                    <span class="w-8 h-[1px] bg-[#E7A51A] group-hover:w-12 transition-all"></span>
+                    <p class="font-mono-code text-sm md:text-base uppercase tracking-[0.4em] text-white/55">Creative Filmmaker</p>
+                </div>
+                <div class="flex items-center gap-2 group">
+                    <span class="w-8 h-[1px] bg-[#E7A51A] group-hover:w-12 transition-all"></span>
+                    <p class="font-mono-code text-sm md:text-base uppercase tracking-[0.4em] text-white/55">Visual Storyteller</p>
+                </div>
+                <div class="flex items-center gap-2 group">
+                    <span class="w-8 h-[1px] bg-[#E7A51A] group-hover:w-12 transition-all"></span>
+                    <p class="font-mono-code text-sm md:text-base uppercase tracking-[0.4em] text-white/55">Cinematographer</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 opacity-0 hero-anim text-center">
+            <p class="font-credits text-[10px] tracking-widest mb-4 text-white/40">SCROLL TO PLAY</p>
+            <i data-lucide="chevron-down" class="w-6 h-6 animate-bounce text-[#E7A51A] mx-auto"></i>
+        </div>
+    </section>
+
+    <section id="about" class="min-h-screen w-full flex flex-col items-center justify-center bg-[#0A0A0A] py-16 md:py-20 relative">
+        <div class="light-leak light-yellow" style="top:-250px; right:-200px;"></div>
+        
+        <div class="section-header">
+            <span class="chapter-number text-5xl md:text-7xl opacity-40">01</span>
+            <h2 class="section-title text-4xl sm:text-5xl md:text-6xl text-white">ABOUT</h2>
+        </div>
+
+        <div class="container mx-auto px-5 md:px-12 mt-6">
+            <div class="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+                <div class="gsap-reveal-left order-2 md:order-1">
+                    <div class="spotlight top-[-200px] left-[30%]"></div>
+                    
+                    <div class="space-y-6 text-gray-300 text-lg md:text-xl lg:text-2xl font-light leading-relaxed">
+                        <p>Experienced filmmaker and studio operator with a strong background in <span class="text-white font-bold">cinematography, directing, camera operating</span>, and visual storytelling.</p>
+                        <p>Worked on <span class="text-[#E7A51A] font-bold">130+ projects</span>, including documentaries, TV commercials, music videos, and films across diverse production environments.</p>
+                        <p>Skilled in studio operations, on-set collaboration, and delivering high quality visual content that enhances brand and narrative identity.</p>
+                    </div>
+
+                    <div class="mt-6 md:mt-12 flex items-center gap-4 text-xs font-mono-code text-white/55 border-t border-[rgba(255,255,255,0.08)] pt-8">
+                        <i data-lucide="map-pin" class="w-4 h-4 text-[#E7A51A]"></i>
+                        <span class="tracking-widest uppercase">CURRENTLY : DUBAI - UAE</span>
+                    </div>
+                </div>
+                
+                <div class="order-1 md:order-2 flex justify-center">
+                    <div class="relative w-full max-w-md aspect-[3/4] rounded-lg overflow-hidden gsap-reveal-right shadow-2xl border border-[rgba(255,255,255,0.08)]">
+                        <div class="absolute inset-0 bg-[#E7A51A]/5 mix-blend-overlay z-10"></div>
+                        <img src="https://i.ibb.co/XxDCkS4S/Whats-App-Image-2026-03-07-at-3-45-09-AM-2.jpg" alt="Yousef Salman" class="w-full h-full object-cover object-center transition-all duration-1000">
+                        <div class="absolute bottom-6 left-6 z-20">
+                            <p class="font-handwriting text-white text-4xl drop-shadow-md">Yousef Salman</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="w-full mt-16 grid grid-cols-4 md:grid-cols-7 gap-2 md:gap-4 gsap-fade-up">
+                <div class="aspect-square border border-[rgba(255,255,255,0.08)] overflow-hidden rounded-md cursor-pointer group">
+                    <img src="https://i.ibb.co/4RnwdLgQ/IMG-2204-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 group-hover:scale-110 transition-all duration-700">
+                </div>
+                <div class="aspect-square border border-[rgba(255,255,255,0.08)] overflow-hidden rounded-md cursor-pointer group">
+                    <img src="https://i.ibb.co/YBsZgCkJ/IMG-3909-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 group-hover:scale-110 transition-all duration-700">
+                </div>
+                <div class="aspect-square border border-[rgba(255,255,255,0.08)] overflow-hidden rounded-md cursor-pointer group hidden sm:block">
+                    <img src="https://i.ibb.co/x8SynJNd/IMG-8402-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 group-hover:scale-110 transition-all duration-700">
+                </div>
+                <div class="aspect-square border border-[rgba(255,255,255,0.08)] overflow-hidden rounded-md cursor-pointer group hidden md:block">
+                    <img src="https://i.ibb.co/j9QQxR9b/IMG-8533-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 group-hover:scale-110 transition-all duration-700">
+                </div>
+                <div class="aspect-square border border-[rgba(255,255,255,0.08)] overflow-hidden rounded-md cursor-pointer group hidden md:block">
+                    <img src="https://i.ibb.co/kgq6kcFd/IMG-8658-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 group-hover:scale-110 transition-all duration-700">
+                </div>
+                <div class="aspect-square border border-[rgba(255,255,255,0.08)] overflow-hidden rounded-md cursor-pointer group hidden md:block">
+                    <img src="https://i.ibb.co/kV8kmkmJ/IMG-8849-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 group-hover:scale-110 transition-all duration-700">
+                </div>
+                <div class="aspect-square border border-[rgba(255,255,255,0.08)] overflow-hidden rounded-md cursor-pointer group">
+                    <img src="https://i.ibb.co/b5k1zNqz/IMG-9990-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 group-hover:scale-110 transition-all duration-700">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="graduation" class="min-h-screen w-full flex flex-col items-center justify-center bg-[#050505] relative overflow-hidden py-16 md:py-20 border-y border-[rgba(255,255,255,0.08)]">
+        
+        <div class="section-header">
+            <span class="chapter-number text-5xl md:text-7xl opacity-40">02</span>
+            <h2 class="section-title text-4xl sm:text-5xl md:text-6xl text-white">EDUCATION</h2>
+        </div>
+
+        <div class="container mx-auto px-5 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center mt-6">
+            <div class="lg:col-span-5 relative w-full aspect-[3/4] rounded-lg overflow-hidden gsap-reveal-left border border-[rgba(255,255,255,0.08)] shadow-2xl mx-auto max-w-sm lg:max-w-full">
+                <img src="https://i.ibb.co/pr3W1dzy/Whats-App-Image-2025-12-05-at-12-07-19-AM-1.jpg" class="w-full h-full object-cover object-center object-[center_30%]">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/20"></div>
+                <div class="absolute bottom-8 left-8 z-20">
+                    <div class="bg-[#E7A51A] px-4 py-2 mb-2 inline-block">
+                        <p class="font-mono-code text-black text-[10px] uppercase font-bold tracking-widest">Class of 2023</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-7 glass-card p-10 md:p-14 rounded-2xl relative gsap-reveal-right">
+                <div class="inner-glow"></div>
+                <div class="space-y-8 relative z-10">
+                    <div>
+                        <h4 class="text-[#E7A51A] font-mono-code text-xs tracking-[0.2em] uppercase mb-4">SAE INSTITUTE AMMAN</h4>
+                        <h3 class="text-2xl md:text-3xl text-white font-montserrat font-bold tracking-[0.1em] uppercase">BACHELOR’S DEGREE</h3>
+                        <p class="text-lg text-white/55 font-light mt-2">Digital Filmmaking</p>
+                        <p class="text-sm font-mono-code text-white/40 mt-6 tracking-widest">2019 – 2023</p>
+                    </div>
+                    <div class="p-6 border-l border-[rgba(255,255,255,0.08)] bg-white/5">
+                        <p class="text-lg text-white/55 italic font-light leading-relaxed">
+                            "The graduation wrap marked the final cut of the student era and the beginning of the professional narrative."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="py-16 md:py-20 bg-[#0A0A0A] relative border-b border-[rgba(255,255,255,0.08)]">
+        <div class="skills-grain"></div>
+
+        <div class="section-header">
+            <span class="chapter-number text-5xl md:text-7xl opacity-40">03</span>
+            <h2 class="section-title text-4xl sm:text-5xl md:text-6xl text-white">SKILLS</h2>
+        </div>
+
+        <div class="container mx-auto px-5 md:px-12 relative z-10 mt-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <div class="glass-card p-10 rounded-2xl group hover:border-[#E7A51A] transition-all duration-500 relative overflow-hidden gsap-fade-up">
+                    <div class="inner-glow"></div>
+                    <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-700 bg-gradient-to-br from-[#E7A51A]/10 via-transparent to-transparent z-0"></div>
+                    <i data-lucide="camera" class="w-10 h-10 text-[#E7A51A] mb-8 relative z-10"></i>
+                    <h3 class="text-xl md:text-2xl text-white mb-6 font-montserrat font-bold tracking-[0.15em] uppercase relative z-10">CINEMATOGRAPHY</h3>
+                    <ul class="space-y-4 font-mono-code text-xs md:text-sm text-white/55 uppercase tracking-wide relative z-10">
+                        <li>• Camera Operating</li>
+                        <li>• Focus Pulling</li>
+                        <li>• Camera Assisting</li>
+                        <li>• Visual Concept Dev</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card p-10 rounded-2xl group hover:border-[#E7A51A] transition-all duration-500 relative overflow-hidden gsap-fade-up" style="transition-delay: 100ms;">
+                    <div class="inner-glow"></div>
+                    <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-700 bg-gradient-to-br from-[#E7A51A]/10 via-transparent to-transparent z-0"></div>
+                    <i data-lucide="layers" class="w-10 h-10 text-[#E7A51A] mb-8 relative z-10"></i>
+                    <h3 class="text-xl md:text-2xl text-white mb-6 font-montserrat font-bold tracking-[0.15em] uppercase relative z-10">PRODUCTION</h3>
+                    <ul class="space-y-4 font-mono-code text-xs md:text-sm text-white/55 uppercase tracking-wide relative z-10">
+                        <li>• Studio & Set Operations</li>
+                        <li>• Lighting Setup</li>
+                        <li>• Technical Support</li>
+                        <li>• Production Workflow</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card p-10 rounded-2xl group hover:border-[#E7A51A] transition-all duration-500 relative overflow-hidden gsap-fade-up" style="transition-delay: 200ms;">
+                    <div class="inner-glow"></div>
+                    <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-700 bg-gradient-to-br from-[#E7A51A]/10 via-transparent to-transparent z-0"></div>
+                    <i data-lucide="clapperboard" class="w-10 h-10 text-[#E7A51A] mb-8 relative z-10"></i>
+                    <h3 class="text-xl md:text-2xl text-white mb-6 font-montserrat font-bold tracking-[0.15em] uppercase relative z-10">DIRECTORIAL</h3>
+                    <ul class="space-y-4 font-mono-code text-xs md:text-sm text-white/55 uppercase tracking-wide relative z-10">
+                        <li>• Creative Direction</li>
+                        <li>• Narrative Identity</li>
+                        <li>• Team Collaboration</li>
+                        <li>• Problem-Solving</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="cinematic-portfolio-wrapper" id="cinematic-portfolio">
+        <div class="ambient-glow"></div>
+        <header class="section-header relative z-10">
+            <span class="chapter-number text-5xl md:text-7xl opacity-40">04</span>
+            <h1 class="title-mono text-[9px] sm:text-[10px] opacity-50 mb-2">Cinematic Anthology</h1>
+            <h2 class="section-title text-4xl sm:text-5xl md:text-6xl text-white">Prime Portfolio</h2>
+        </header>
+        <main class="viewport" id="portfolio-viewport"></main>
+        <div class="nav-dots" id="portfolio-dots"></div>
+        <div class="scroll-hint" id="portfolio-hint"></div>
+    </section>
+
+    <section id="b3eed" class="min-h-screen w-full flex flex-col items-center justify-center bg-[#0A0A0A] relative border-y border-[rgba(255,255,255,0.08)] overflow-hidden py-16 md:py-20 b3eed-section">
+        
+        <div class="b3eed-sweep"></div>
+
+        <div class="section-header relative z-10">
+            <span class="chapter-number text-5xl md:text-7xl opacity-40">05</span>
+            <h2 class="section-title text-4xl sm:text-5xl md:text-6xl text-[#E7A51A]">B3EED</h2>
+        </div>
+
+        <div class="container mx-auto px-5 md:px-12 grid md:grid-cols-2 gap-10 md:gap-16 items-center relative z-10 mt-6">
+            <div class="relative group cursor-pointer gsap-scale-in order-2 md:order-1 max-w-sm mx-auto md:max-w-none w-full">
+                <div class="absolute -inset-1 bg-gradient-to-r from-[#E7A51A]/30 to-transparent rounded-lg blur opacity-40"></div>
+                <div class="relative aspect-[3/4] bg-black rounded-lg border border-[rgba(255,255,255,0.08)] overflow-hidden flex items-center justify-center shadow-2xl glass-card">
+                    <img src="https://i.ibb.co/KpLfgm5q/Whats-App-Image-2025-12-05-at-12-07-20-AM.jpg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent z-10"></div>
+                    <div class="absolute bottom-8 left-0 w-full flex justify-center z-20">
+                        <div class="flex flex-col items-center">
+                            <i data-lucide="film" class="w-8 h-8 text-[#E7A51A] mb-2"></i>
+                            <span class="text-[10px] font-mono-code text-[#E7A51A] uppercase tracking-[0.2em] font-bold">Graduation Film</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gsap-fade-up order-1 md:order-2">
+                <div class="mb-8 border-l-2 border-[#E7A51A]/60 pl-6 py-2">
+                    <p class="text-[10px] md:text-xs text-[#E7A51A] font-mono-code tracking-[0.4em] uppercase mb-2">DIRECTED & SHOT BY YOUSEF SALMAN</p>
+                    <h3 class="text-xl md:text-2xl text-white font-montserrat font-bold tracking-widest uppercase">A Director's Genesis</h3>
+                </div>
+                
+                <div class="space-y-6 text-base md:text-lg text-white/80 font-light leading-relaxed mb-12 max-w-prose">
+                    <p>"B3EED" wasn’t just my graduation project. It was the film I carried from the very first idea all the way to the final frame.</p>
+                    <p>I chose to take full control of it—directing it, shooting it, and shaping every moment behind the camera.</p>
+                    <p>Every long night, every challenge on set, every decision… it all became part of the story.</p>
+                    <p class="text-[#E7A51A] italic border-l border-[rgba(255,255,255,0.08)] bg-white/5 backdrop-blur-sm pl-4 py-3 mt-4">
+                        This film became more than a project for me. It became proof that the director inside me was finally ready to speak.
+                    </p>
+                </div>
+                
+                <a href="#" class="inline-flex items-center gap-4 px-10 py-5 border-2 border-[rgba(255,255,255,0.08)] bg-[rgba(20,20,20,0.4)] backdrop-blur-md text-[#E7A51A] font-mono-code text-sm md:text-base tracking-[0.2em] uppercase hover:bg-[#E7A51A] hover:text-black transition-all duration-300">
+                    <i data-lucide="play" class="w-5 h-5"></i>
+                    Watch Trailer
+                </a>
+            </div>
+        </div>
+
+        <div class="w-full mt-24 overflow-hidden relative border-t border-[rgba(255,255,255,0.08)] pt-12 z-10">
+            <div class="absolute inset-y-0 left-0 w-24 md:w-48 bg-gradient-to-r from-[#0A0A0A] to-transparent z-10 pointer-events-none"></div>
+            <div class="absolute inset-y-0 right-0 w-24 md:w-48 bg-gradient-to-l from-[#0A0A0A] to-transparent z-10 pointer-events-none"></div>
+            
+            <p class="text-center font-mono-code text-[10px] text-white/55 tracking-[0.5em] mb-8 uppercase font-bold px-4">
+                <span class="text-[#E7A51A]">Behind The Scenes</span> — The Making of B3EED
+            </p>
+            
+            <div class="bts-track gap-4 md:gap-6 px-4">
+                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/p6g9s8SV/IMG-1344.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/jk5vmrsb/IMG-1347.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/ksKsyQpL/IMG-1349.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/N2NryCfT/IMG-1351.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/qLf6Nvxp/IMG-1346.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/nqWW8HtL/IMG-1355.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                
+                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/p6g9s8SV/IMG-1344.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/jk5vmrsb/IMG-1347.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/ksKsyQpL/IMG-1349.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/N2NryCfT/IMG-1351.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/qLf6Nvxp/IMG-1346.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/nqWW8HtL/IMG-1355.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="memories" class="relative h-screen bg-[#050505] overflow-hidden flex items-center justify-center">
+        <div class="absolute inset-0 memory-overlay-vignette z-20 pointer-events-none"></div>
+        <div class="absolute inset-0 bg-black/40 z-20 pointer-events-none"></div>
+
+        <div class="absolute z-30 flex flex-col items-center pointer-events-none text-center px-4 w-full">
+            <span class="chapter-number text-5xl md:text-7xl opacity-40">06</span>
+            <h2 class="text-4xl sm:text-5xl md:text-6xl text-white font-montserrat font-black uppercase tracking-[0.2em] drop-shadow-[0_0_30px_rgba(255,255,255,0.15)] mix-blend-overlay mt-2">
+                MEMORIES
+            </h2>
+            <p class="text-[#E7A51A] font-mono-code text-[10px] md:text-xs tracking-[0.5em] md:tracking-[1em] mt-6 uppercase font-bold">
+                THE ARCHIVE OF SCENES
+            </p>
+        </div>
+
+        <div class="absolute inset-[-20%] z-10 flex flex-col justify-center gap-4 md:gap-6" style="transform: perspective(1200px) rotateX(15deg) rotateY(-8deg) rotateZ(-3deg) scale(1.1);">
+            
+            <div class="memory-row flex w-max">
+                <div class="flex animate-track-left w-max">
+                    <div class="flex shrink-0 gap-4 md:gap-6 pr-4 md:pr-6">
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/ZzXZv83W/IMG-9377-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/zTSZsf1N/IMG-8852-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/DDyKnWhJ/IMG-8664-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/CsJr0cCh/IMG-5424.png" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/3m7n3bB5/IMG-4969-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/KzqsMvgf/IMG-4557-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                    </div>
+                    <div class="flex shrink-0 gap-4 md:gap-6 pr-4 md:pr-6">
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/ZzXZv83W/IMG-9377-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/zTSZsf1N/IMG-8852-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/DDyKnWhJ/IMG-8664-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/CsJr0cCh/IMG-5424.png" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/3m7n3bB5/IMG-4969-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/KzqsMvgf/IMG-4557-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="memory-row flex w-max">
+                <div class="flex animate-track-right w-max">
+                    <div class="flex shrink-0 gap-4 md:gap-6 pr-4 md:pr-6">
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/hFMq1wpt/IMG-3910-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/yBhT5r47/IMG-2205-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/p6g9s8SV/IMG-1344.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/YBsZgCkJ/IMG-3909-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/DDyKnWhJ/IMG-8664-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/ZzXZv83W/IMG-9377-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                    </div>
+                    <div class="flex shrink-0 gap-4 md:gap-6 pr-4 md:pr-6">
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/hFMq1wpt/IMG-3910-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/yBhT5r47/IMG-2205-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/p6g9s8SV/IMG-1344.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/YBsZgCkJ/IMG-3909-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/DDyKnWhJ/IMG-8664-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/ZzXZv83W/IMG-9377-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="memory-row flex w-max">
+                <div class="flex animate-track-left w-max" style="animation-duration: 50s;">
+                    <div class="flex shrink-0 gap-4 md:gap-6 pr-4 md:pr-6">
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/3m7n3bB5/IMG-4969-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/KzqsMvgf/IMG-4557-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/CsJr0cCh/IMG-5424.png" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/zTSZsf1N/IMG-8852-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/DDyKnWhJ/IMG-8664-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/hFMq1wpt/IMG-3910-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                    </div>
+                    <div class="flex shrink-0 gap-4 md:gap-6 pr-4 md:pr-6">
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/3m7n3bB5/IMG-4969-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/KzqsMvgf/IMG-4557-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/CsJr0cCh/IMG-5424.png" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/zTSZsf1N/IMG-8852-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/DDyKnWhJ/IMG-8664-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                        <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/hFMq1wpt/IMG-3910-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <div class="absolute bottom-10 z-30 text-center w-full">
+            <p class="font-mono-code text-[10px] text-[#E7A51A] tracking-[0.3em] uppercase animate-pulse drop-shadow-md">
+                HOVER TO REVEAL COLORS & PAUSE
+            </p>
+        </div>
+    </section>
+
+    <section id="portfolio" class="py-16 md:py-20 bg-[#0A0A0A] relative border-t border-[rgba(255,255,255,0.08)]">
+        
+        <div class="section-header">
+            <span class="chapter-number text-5xl md:text-7xl opacity-40">07</span>
+            <h2 class="section-title text-4xl sm:text-5xl md:text-6xl text-white">FULL FILMOGRAPHY</h2>
+            <div class="w-24 h-[1px] bg-[rgba(255,255,255,0.08)] mx-auto mt-10"></div>
+        </div>
+
+        <div class="container mx-auto px-5 md:px-12 mt-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
+                
+                <div class="gsap-fade-up glass-card p-8 rounded-2xl relative">
+                    <div class="inner-glow"></div>
+                    <h3 class="text-lg md:text-xl text-[#E7A51A] font-montserrat font-bold tracking-[0.1em] uppercase mb-6 border-b border-[rgba(255,255,255,0.08)] pb-4 relative z-10">FEATURE FILMS & TV</h3>
+                    <ul class="flex flex-col relative z-10">
+                        <li class="flex justify-between items-center py-4 border-b border-[rgba(255,255,255,0.05)] last:border-0 group cursor-default">
+                            <span class="text-white/55 font-mono-code text-sm tracking-wide group-hover:text-white transition-colors">Rawabi School for Girls 2</span> 
+                            <span class="text-[10px] text-[#E7A51A] font-mono-code tracking-widest uppercase ml-4 text-right">NETFLIX</span>
+                        </li>
+                        <li class="flex justify-between items-center py-4 border-b border-[rgba(255,255,255,0.05)] last:border-0 group cursor-default">
+                            <span class="text-white/55 font-mono-code text-sm tracking-wide group-hover:text-white transition-colors">Boomeh</span> 
+                            <span class="text-[10px] text-white/40 font-mono-code tracking-widest uppercase ml-4 text-right">FEATURE</span>
+                        </li>
+                        <li class="flex justify-between items-center py-4 border-b border-[rgba(255,255,255,0.05)] last:border-0 group cursor-default">
+                            <span class="text-white/55 font-mono-code text-sm tracking-wide group-hover:text-white transition-colors">B3eed</span> 
+                            <span class="text-[10px] text-[#E7A51A] font-mono-code tracking-widest uppercase ml-4 text-right">SHORT</span>
+                        </li>
+                        <li class="flex justify-between items-center py-4 border-b border-[rgba(255,255,255,0.05)] last:border-0 group cursor-default">
+                            <span class="text-white/55 font-mono-code text-sm tracking-wide group-hover:text-white transition-colors">Way Home</span> 
+                            <span class="text-[10px] text-white/40 font-mono-code tracking-widest uppercase ml-4 text-right">SHORT</span>
+                        </li>
+                        <li class="flex justify-between items-center py-4 border-b border-[rgba(255,255,255,0.05)] last:border-0 group cursor-default">
+                            <span class="text-white/55 font-mono-code text-sm tracking-wide group-hover:text-white transition-colors">Riyadh Rendezvous</span> 
+                            <span class="text-[10px] text-white/40 font-mono-code tracking-widest uppercase ml-4 text-right">FILM</span>
+                        </li>
+                        <li class="flex justify-between items-center py-4 border-b border-[rgba(255,255,255,0.05)] last:border-0 group cursor-default">
+                            <span class="text-white/55 font-mono-code text-sm tracking-wide group-hover:text-white transition-colors">Kees Dam</span> 
+                            <span class="text-[10px] text-white/40 font-mono-code tracking-widest uppercase ml-4 text-right">SHORT</span>
+                        </li>
+                        <li class="flex justify-between items-center py-4 border-b border-[rgba(255,255,255,0.05)] last:border-0 group cursor-default">
+                            <span class="text-white/55 font-mono-code text-sm tracking-wide group-hover:text-white transition-colors">AMBUSH</span> 
+                            <span class="text-[10px] text-white/40 font-mono-code tracking-widest uppercase ml-4 text-right">SHORT</span>
+                        </li>
+                        <li class="flex justify-between items-center py-4 border-b border-[rgba(255,255,255,0.05)] last:border-0 group cursor-default">
+                            <span class="text-white/55 font-mono-code text-sm tracking-wide group-hover:text-white transition-colors">S.A.S Who Dares to Win</span> 
+                            <span class="text-[10px] text-[#E7A51A] font-mono-code tracking-widest uppercase ml-4 text-right">SERIES</span>
+                        </li>
+                        <li class="flex justify-between items-center py-4 border-b border-[rgba(255,255,255,0.05)] last:border-0 group cursor-default">
+                            <span class="text-white/55 font-mono-code text-sm tracking-wide group-hover:text-white transition-colors">Dubai Documentary</span> 
+                            <span class="text-[10px] text-white/40 font-mono-code tracking-widest uppercase ml-4 text-right">DOC</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="gsap-fade-up glass-card p-8 rounded-2xl relative" style="transition-delay: 100ms;">
+                    <div class="inner-glow"></div>
+                    <h3 class="text-lg md:text-xl text-white font-montserrat font-bold tracking-[0.1em] uppercase mb-6 border-b border-[rgba(255,255,255,0.08)] pb-4 relative z-10">COMMERCIAL CAMPAIGNS</h3>
+                    <ul class="flex flex-col relative z-10">
+                        <li class="flex justify-between items-center py-4 border-b border-[rgba(255,255,255,0.05)] last:border-0 group cursor-default">
+                            <span class="text-white/55 font-mono-code text-sm tracking-wide group-hover:text-white transition-colors">Dior</span> 
+                            <span class="text-[10px] text-[#E7A51A] font-mono-code tracking-widest uppercase ml-4 text-right">GLOBAL</span>
+                        </li>
+                        <li class="flex justify-between items-center py-4 border-b border-[rgba(255,255,255,0.05)] last:border-0 group cursor-default">
+                            <span class="text-white/55 font-mono-code text-sm tracking-wide group-hover:text-white transition-colors">Louis Vuitton</span> 
+                            <span class="text-[10px] text-[#E7A51A] font-mono-code tracking-widest uppercase ml-4 text-right">GLOBAL</span>
+                        </li>
+                        <li class="flex justify-between items-center py-4 border-b border-[rgba(255,255,255,0.05)] last:border-0 group cursor-default">
+                            <span class="text-white/55 font-mono-code text-sm tracking-wide group-hover:text-white transition-colors">De Beers</span> 
+                            <span class="text-[10px] text-white/40 font-mono-code tracking-widest uppercase ml-4 text-right">LUXURY</span>
+                        </li>
+                        <li class="flex justify-between items-center py-4 border-b border-[rgba(255,255,255,0.05)] last:border-0 group cursor-default">
+                            <span class="text-white/55 font-mono-code text-sm tracking-wide group-hover:text-white transition-colors">Talabat</span> 
+                            <span class="text-[10px] text-white/40 font-mono-code tracking-widest uppercase ml-4 text-right">TVC</span>
+                        </li>
+                        <li class="flex justify-between items-center py-4 border-b border-[rgba(255,255,255,0.05)] last:border-0 group cursor-default">
+                            <span class="text-white/55 font-mono-code text-sm tracking-wide group-hover:text-white transition-colors">Orange</span> 
+                            <span class="text-[10px] text-white/40 font-mono-code tracking-widest uppercase ml-4 text-right">TVC</span>
+                        </li>
+                        <li class="flex justify-between items-center py-4 border-b border-[rgba(255,255,255,0.05)] last:border-0 group cursor-default">
+                            <span class="text-white/55 font-mono-code text-sm tracking-wide group-hover:text-white transition-colors">Zain</span> 
+                            <span class="text-[10px] text-white/40 font-mono-code tracking-widest uppercase ml-4 text-right">TVC</span>
+                        </li>
+                        <li class="flex justify-between items-center py-4 border-b border-[rgba(255,255,255,0.05)] last:border-0 group cursor-default">
+                            <span class="text-white/55 font-mono-code text-sm tracking-wide group-hover:text-white transition-colors">Geely</span> 
+                            <span class="text-[10px] text-white/40 font-mono-code tracking-widest uppercase ml-4 text-right">AUTO</span>
+                        </li>
+                        <li class="flex justify-between items-center py-4 border-b border-[rgba(255,255,255,0.05)] last:border-0 group cursor-default">
+                            <span class="text-white/55 font-mono-code text-sm tracking-wide group-hover:text-white transition-colors">Arab Bank</span> 
+                            <span class="text-[10px] text-white/40 font-mono-code tracking-widest uppercase ml-4 text-right">FINANCE</span>
+                        </li>
+                        <li class="flex justify-between items-center py-4 border-b border-[rgba(255,255,255,0.05)] last:border-0 group cursor-default">
+                            <span class="text-white/55 font-mono-code text-sm tracking-wide group-hover:text-white transition-colors">Challenge 71</span> 
+                            <span class="text-[10px] text-[#E7A51A] font-mono-code tracking-widest uppercase ml-4 text-right">DUBAI</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="gsap-fade-up glass-card p-8 rounded-2xl relative" style="transition-delay: 200ms;">
+                    <div class="inner-glow"></div>
+                    <h3 class="text-lg md:text-xl text-white font-montserrat font-bold tracking-[0.1em] uppercase mb-6 border-b border-[rgba(255,255,255,0.08)] pb-4 relative z-10">MUSIC VIDEOS</h3>
+                    <ul class="flex flex-col relative z-10">
+                        <li class="flex justify-between items-center py-4 border-b border-[rgba(255,255,255,0.05)] last:border-0 group cursor-default">
+                            <span class="text-white/55 font-mono-code text-sm tracking-wide group-hover:text-white transition-colors">Rajieen</span> 
+                            <span class="text-[10px] text-[#E7A51A] font-mono-code tracking-widest uppercase ml-4 text-right">MV</span>
+                        </li>
+                        <li class="flex justify-between items-center py-4 border-b border-[rgba(255,255,255,0.05)] last:border-0 group cursor-default">
+                            <span class="text-white/55 font-mono-code text-sm tracking-wide group-hover:text-white transition-colors">Balak</span> 
+                            <span class="text-[10px] text-white/40 font-mono-code tracking-widest uppercase ml-4 text-right">MV</span>
+                        </li>
+                        <li class="flex justify-between items-center py-4 border-b border-[rgba(255,255,255,0.05)] last:border-0 group cursor-default">
+                            <span class="text-white/55 font-mono-code text-sm tracking-wide group-hover:text-white transition-colors">Asli Ana</span> 
+                            <span class="text-[10px] text-white/40 font-mono-code tracking-widest uppercase ml-4 text-right">MV</span>
+                        </li>
+                        <li class="flex justify-between items-center py-4 border-b border-[rgba(255,255,255,0.05)] last:border-0 group cursor-default">
+                            <span class="text-white/55 font-mono-code text-sm tracking-wide group-hover:text-white transition-colors">Tal Abib</span> 
+                            <span class="text-[10px] text-white/40 font-mono-code tracking-widest uppercase ml-4 text-right">MV</span>
+                        </li>
+                        <li class="flex justify-between items-center py-4 border-b border-[rgba(255,255,255,0.05)] last:border-0 group cursor-default">
+                            <span class="text-white/55 font-mono-code text-sm tracking-wide group-hover:text-white transition-colors">Ya Baghia</span> 
+                            <span class="text-[10px] text-white/40 font-mono-code tracking-widest uppercase ml-4 text-right">MV</span>
+                        </li>
+                        <li class="flex justify-between items-center py-4 border-b border-[rgba(255,255,255,0.05)] last:border-0 group cursor-default">
+                            <span class="text-white/55 font-mono-code text-sm tracking-wide group-hover:text-white transition-colors">Kayan</span> 
+                            <span class="text-[10px] text-white/40 font-mono-code tracking-widest uppercase ml-4 text-right">MV</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-[#050505] border-t border-[rgba(255,255,255,0.08)]">
+        <div class="container mx-auto px-5 md:px-12">
+            <div class="glass-card max-w-lg mx-auto p-8 rounded-2xl flex flex-col items-center justify-center relative">
+                <div class="inner-glow"></div>
+                <p class="font-montserrat font-bold text-[10px] tracking-[0.3em] text-white/55 mb-6 uppercase relative z-10">Languages</p>
+                <div class="flex justify-center items-center gap-6 text-white text-lg md:text-xl font-montserrat font-bold tracking-[0.2em] uppercase relative z-10">
+                    <span>ARABIC</span>
+                    <span class="text-[#E7A51A]">/</span>
+                    <span>ENGLISH</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="min-h-screen w-full flex flex-col items-center justify-center bg-[#0A0A0A] relative py-16 md:py-20 border-t border-[rgba(255,255,255,0.08)]">
+        <div class="container mx-auto px-5 md:px-12">
+            <div class="max-w-5xl mx-auto">
+                
+                <div class="section-header">
+                    <span class="chapter-number text-5xl md:text-7xl opacity-40">08</span>
+                    <h2 class="section-title text-4xl sm:text-5xl md:text-6xl text-white">CONTACT</h2>
+                    <p class="font-mono-code text-xs md:text-sm text-white/40 tracking-[0.4em] uppercase mt-6">Ready for the next scene</p>
+                </div>
+
+                <div class="glass-card p-10 md:p-16 rounded-3xl relative w-full mt-10">
+                    <div class="inner-glow"></div>
+                    <div class="grid md:grid-cols-2 gap-12 md:gap-20 items-start relative z-10">
+                        <div class="space-y-12 gsap-reveal-left">
+                            
+                            <div>
+                                <p class="text-[10px] font-mono-code text-[#E7A51A] mb-4 tracking-[0.2em] uppercase font-bold">Location</p>
+                                <div class="flex items-center gap-3">
+                                    <i data-lucide="globe" class="w-5 h-5 text-[#E7A51A] opacity-80"></i>
+                                    <h3 class="text-sm md:text-base text-white font-montserrat font-bold tracking-[0.15em] uppercase">
+                                        Dubai Based <span class="mx-2 text-white/30 font-light">|</span> Available Worldwide
+                                    </h3>
+                                </div>
+                            </div>
+
+                            <div>
+                                <p class="text-[10px] font-mono-code text-[#E7A51A] mb-4 tracking-[0.2em] uppercase font-bold">Phone</p>
+                                <a href="tel:0585496699" class="text-2xl md:text-3xl text-white font-montserrat font-bold tracking-widest uppercase hover:text-[#E7A51A] transition-colors">058 549 6699</a>
+                            </div>
+                            <div>
+                                <p class="text-[10px] font-mono-code text-[#E7A51A] mb-4 tracking-[0.2em] uppercase font-bold">Email</p>
+                                <a href="mailto:yousef.salman971@gmail.com" class="text-lg md:text-xl text-white font-mono-code hover:text-[#E7A51A] transition-colors break-words">yousef.salman971@gmail.com</a>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col gap-8 md:gap-12 gsap-reveal-right">
+                            <div class="space-y-8">
+                                <a href="https://www.instagram.com/yousef_salman7" target="_blank" class="flex items-center gap-6 group cursor-pointer">
+                                    <div class="w-14 h-14 flex items-center justify-center border border-[rgba(255,255,255,0.08)] group-hover:bg-[#E7A51A] group-hover:border-[#E7A51A] transition-all rounded-lg bg-[rgba(255,255,255,0.02)]">
+                                        <i data-lucide="instagram" class="w-6 h-6 text-white group-hover:text-black transition-colors"></i>
+                                    </div>
+                                    <span class="font-mono-code text-sm md:text-base text-white/55 group-hover:text-white transition-colors uppercase tracking-widest">@YOUSEF_SALMAN7</span>
+                                </a>
+                                <a href="https://www.youtube.com/playlist?list=PLqNiBrUW0UeUtYbby4F8MyHsuCU3E6PZr" target="_blank" class="flex items-center gap-6 group cursor-pointer">
+                                    <div class="w-14 h-14 flex items-center justify-center border border-[rgba(255,255,255,0.08)] group-hover:bg-[#E7A51A] group-hover:border-[#E7A51A] transition-all rounded-lg bg-[rgba(255,255,255,0.02)]">
+                                        <i data-lucide="youtube" class="w-6 h-6 text-white group-hover:text-black transition-colors"></i>
+                                    </div>
+                                    <span class="font-mono-code text-sm md:text-base text-white/55 group-hover:text-white transition-colors uppercase tracking-widest">YOUTUBE PLAYLIST</span>
+                                </a>
+                            </div>
+                            <div class="mt-4 pt-10 border-t border-[rgba(255,255,255,0.08)]">
+                                <p class="font-handwriting text-5xl text-white drop-shadow-md">Yousef Salman</p>
+                                <p class="font-mono-code text-[10px] text-white/40 uppercase mt-4 tracking-widest font-bold">Available for Worldwide Projects</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#050505] py-20 text-center border-t border-[rgba(255,255,255,0.08)]">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl text-white font-montserrat font-black uppercase tracking-[0.2em] mb-8">YOUSEF SALMAN</h1>
+            <p class="text-white/55 font-mono-code text-xs md:text-sm mb-12 tracking-[0.3em] uppercase">Creative Filmmaker | Cinematographer | Visual Storyteller</p>
+            
+            <div class="flex justify-center gap-8 mb-12">
+                <span class="w-1.5 h-1.5 bg-[#E7A51A] rounded-full"></span>
+                <span class="w-1.5 h-1.5 bg-[rgba(255,255,255,0.2)] rounded-full"></span>
+                <span class="w-1.5 h-1.5 bg-[rgba(255,255,255,0.2)] rounded-full"></span>
+            </div>
+            
+            <p class="text-white/40 text-[10px] md:text-xs tracking-[0.4em] uppercase font-mono-code">© 2025 THE Y.S CUT • ALL RIGHTS RESERVED</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Register GSAP Plugins
+        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+        // TASK 8: Menu Dropdown Logic
+        const menuToggle = document.getElementById('menu-toggle');
+        const dropdownMenu = document.getElementById('dropdown-menu');
+        const menuArrow = document.getElementById('menu-arrow');
+        
+        menuToggle.addEventListener('click', () => {
+            const isOpen = dropdownMenu.classList.contains('opacity-100');
+            if (isOpen) {
+                dropdownMenu.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+                dropdownMenu.classList.add('opacity-0', 'pointer-events-none', '-translate-y-4');
+                menuArrow.style.transform = 'rotate(0deg)';
+            } else {
+                dropdownMenu.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-4');
+                dropdownMenu.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+                menuArrow.style.transform = 'rotate(180deg)';
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!menuToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                dropdownMenu.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+                dropdownMenu.classList.add('opacity-0', 'pointer-events-none', '-translate-y-4');
+                menuArrow.style.transform = 'rotate(0deg)';
+            }
+        });
+
+        dropdownMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                dropdownMenu.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+                dropdownMenu.classList.add('opacity-0', 'pointer-events-none', '-translate-y-4');
+                menuArrow.style.transform = 'rotate(0deg)';
+            });
+        });
+
+        // 1. Hero Entrance Animations
+        window.addEventListener('load', () => {
+            const tl = gsap.timeline();
+            tl.to(".hero-anim", { 
+                y: 0, 
+                opacity: 1, 
+                duration: 1.2, 
+                stagger: 0.3, 
+                ease: "power4.out" 
+            })
+            .to("#hero-bg", { 
+                scale: 1, 
+                duration: 15, 
+                ease: "none" 
+            }, "<");
+        });
+
+        // 2. Scroll Animations - Reveal Sections
+        const revealLeft = gsap.utils.toArray(".gsap-reveal-left");
+        revealLeft.forEach((el) => {
+            gsap.from(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 85%",
+                },
+                x: -50,
+                opacity: 0,
+                duration: 1,
+                ease: "power3.out"
+            });
+        });
+
+        const revealRight = gsap.utils.toArray(".gsap-reveal-right");
+        revealRight.forEach((el) => {
+            gsap.from(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 85%",
+                },
+                x: 50,
+                opacity: 0,
+                duration: 1,
+                ease: "power3.out"
+            });
+        });
+
+        const fadeUps = gsap.utils.toArray(".gsap-fade-up");
+        fadeUps.forEach((el) => {
+            gsap.from(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 90%",
+                },
+                y: 40,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+        });
+
+        // 3. Chapter Number Parallax
+        const chapters = gsap.utils.toArray(".chapter-number");
+        chapters.forEach((num) => {
+            gsap.to(num, {
+                scrollTrigger: {
+                    trigger: num,
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: true
+                },
+                y: -100,
+                opacity: 0.8,
+                ease: "none"
+            });
+        });
+
+        // 4. Smooth Scroll for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if(target) {
+                    gsap.to(window, {
+                        duration: 1.5,
+                        scrollTo: target,
+                        ease: "power4.inOut"
+                    });
+                }
+            });
+        });
+        
+    </script>
+
+    <script>
+        (function() {
+            const projectData = [
+                {
+                title: "RAWABI SCHOOL FOR GIRLS",
+                titleClass: "text-[#E50914] font-['Anton'] tracking-normal text-3xl uppercase",
+                role: "NETFLIX SERIES",
+                desc: "Camera department work on the globally distributed Netflix series filmed in Jordan.",
+                img: "https://i.ibb.co/60w7V5S8/Whats-App-Image-2025-12-05-at-12-07-19-AM-3.jpg"
+                },
+                {
+                title: "DIOR CAMPAIGN",
+                titleClass: "text-white font-serif font-normal tracking-[0.3em] uppercase",
+                role: "LUXURY COMMERCIAL",
+                desc: "Luxury fashion campaign production for Dior.",
+                img: "https://i.ibb.co/2Y73mD4R/Whats-App-Image-2025-12-05-at-12-56-21-AM-7.jpg"
+                },
+                {
+                title: "LOUIS VUITTON",
+                titleClass: "text-[#D4AF37] font-serif font-normal tracking-[0.2em] uppercase",
+                role: "GLOBAL CAMPAIGN",
+                desc: "Commercial campaign produced for Louis Vuitton international marketing.",
+                img: "https://i.ibb.co/60WSv2zH/Whats-App-Image-2025-12-05-at-12-56-21-AM-6.jpg"
+                },
+                {
+                title: "DE BEERS",
+                titleClass: "text-white font-serif font-light tracking-[0.25em] uppercase",
+                role: "LUXURY CAMPAIGN",
+                desc: "High-end jewelry campaign production.",
+                img: "https://i.ibb.co/twmn5thm/Whats-App-Image-2025-12-05-at-12-56-22-AM-2.jpg"
+                },
+                {
+                title: "S.A.S WHO DARES TO WIN",
+                titleClass: "text-[#E7A51A] font-montserrat font-bold tracking-tight uppercase",
+                role: "TV SERIES",
+                desc: "International series production filmed across multiple locations.",
+                img: "https://i.ibb.co/60w7V5S8/Whats-App-Image-2025-12-05-at-12-07-19-AM-3.jpg"
+                },
+                {
+                title: "RIYADH RENDEZVOUS",
+                titleClass: "text-white font-montserrat font-bold tracking-tight uppercase",
+                role: "FILM",
+                desc: "Narrative film production project filmed in Saudi Arabia.",
+                img: "https://i.ibb.co/Ps8W4cPF/Whats-App-Image-2025-12-05-at-1-11-54-AM.jpg"
+                }
+            ];
+    
+            const viewport = document.getElementById('portfolio-viewport');
+            const dotsContainer = document.getElementById('portfolio-dots');
+            const hintText = document.getElementById('portfolio-hint');
+            let cards = [];
+            let currentIndex = 0;
+            let isDesktop = window.innerWidth >= 1024;
+            let draggableInstance = null;
+    
+            function init() {
+                gsap.registerPlugin(Draggable);
+                createCards();
+                setupResizeObserver();
+                updateLayout();
+            }
+    
+            function createCards() {
+                viewport.innerHTML = '';
+                dotsContainer.innerHTML = '';
+                cards = [];
+    
+                projectData.forEach((project, i) => {
+                    const card = document.createElement('div');
+                    card.className = 'card glass-card';
+                    card.innerHTML = `
+                        <div class="inner-glow"></div>
+                        <div class="image-wrapper relative z-10">
+                            <img src="${project.img}" alt="${project.title}" loading="lazy">
+                        </div>
+                        <div class="p-6 sm:p-8 flex-1 flex flex-col justify-between relative z-10">
+                            <div>
+                                <span class="pill inline-block mb-3">${project.role}</span>
+                                <h2 class="text-xl sm:text-2xl mb-2 ${project.titleClass}">${project.title}</h2>
+                                <p class="text-white/40 text-xs sm:text-sm leading-relaxed font-light line-clamp-2">${project.desc}</p>
+                            </div>
+                            <div class="flex items-center gap-2 group cursor-pointer w-fit mt-4">
+                                <span class="text-[9px] uppercase tracking-widest font-bold text-white/60 group-hover:text-white transition-colors">Case Study</span>
+                                <svg class="w-3 h-3 text-white/40 group-hover:text-white transition-all transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                            </div>
+                        </div>
+                    `;
+                    viewport.appendChild(card);
+                    cards.push(card);
+    
+                    const dot = document.createElement('div');
+                    dot.className = 'dot';
+                    dotsContainer.appendChild(dot);
+                });
+            }
+    
+            function updateLayout() {
+                isDesktop = window.innerWidth >= 1024;
+                if (draggableInstance) {
+                    if(Array.isArray(draggableInstance)) draggableInstance[0].kill();
+                    else draggableInstance.kill();
+                }
+                gsap.set(cards, { clearProps: "all" });
+    
+                if (isDesktop) {
+                    initCarousel();
+                    hintText.textContent = ""; 
+                } else {
+                    initStack();
+                    hintText.textContent = ""; 
+                }
+                updateDots();
+            }
+    
+            function initStack() {
+                const total = cards.length;
+                cards.forEach((card, i) => {
+                    let depth = (i - currentIndex + total) % total;
+                    if (depth > 3) {
+                        gsap.set(card, { opacity: 0, pointerEvents: 'none', y: 100 });
+                    } else {
+                        gsap.set(card, {
+                            zIndex: 100 - depth,
+                            opacity: 1 - (depth * 0.3),
+                            scale: 1 - (depth * 0.05),
+                            y: depth * 25,
+                            x: 0, rotation: 0,
+                            filter: `blur(${depth * 2}px)`,
+                            pointerEvents: depth === 0 ? 'auto' : 'none'
+                        });
+                    }
+                });
+    
+                const topCard = cards[currentIndex];
+                if (!topCard) return;
+    
+                draggableInstance = Draggable.create(topCard, {
+                    type: "x,y",
+                    onDrag: function() {
+                        gsap.set(this.target, { rotation: this.x * 0.05 });
+                    },
+                    onRelease: function() {
+                        if (Math.abs(this.y) > 120 || Math.abs(this.x) > 120) {
+                            dismissCard(this.target, this.x, this.y);
+                        } else {
+                            gsap.to(this.target, { x: 0, y: 0, rotation: 0, duration: 0.5, ease: "back.out(1.7)" });
+                        }
+                    }
+                });
+            }
+    
+            function dismissCard(card, x, y) {
+                const angle = Math.atan2(y, x);
+                const dist = window.innerHeight;
+                gsap.to(card, {
+                    x: Math.cos(angle) * dist,
+                    y: Math.sin(angle) * dist,
+                    rotation: 45, opacity: 0, duration: 0.5, ease: "power2.in",
+                    onComplete: () => {
+                        currentIndex = (currentIndex + 1) % cards.length;
+                        initStack();
+                        updateDots();
+                    }
+                });
+            }
+    
+            function initCarousel() {
+                const total = cards.length;
+                const spacing = window.innerWidth > 1400 ? 380 : 320;
+    
+                function render() {
+                    cards.forEach((card, i) => {
+                        let offset = i - currentIndex;
+                        if (offset > total / 2) offset -= total;
+                        if (offset < -total / 2) offset += total;
+    
+                        const absOffset = Math.abs(offset);
+                        gsap.to(card, {
+                            x: offset * spacing,
+                            z: absOffset * -300,
+                            rotationY: offset * -35,
+                            opacity: Math.max(0, 1 - (absOffset * 0.45)),
+                            scale: 1 - (absOffset * 0.12),
+                            filter: `blur(${absOffset * 5}px)`,
+                            zIndex: 100 - Math.floor(absOffset * 10),
+                            duration: 0.8,
+                            ease: "power3.out",
+                            overwrite: true,
+                            pointerEvents: absOffset < 0.5 ? 'auto' : 'none'
+                        });
+                    });
+                }
+    
+                render();
+    
+                draggableInstance = Draggable.create(document.createElement('div'), {
+                    trigger: viewport,
+                    type: "x",
+                    onDrag: function() {
+                        if (Math.abs(this.deltaX) > 15) {
+                            if (this.deltaX < 0) currentIndex = (currentIndex + 1) % total;
+                            else currentIndex = (currentIndex - 1 + total) % total;
+                            this.endDrag();
+                            render();
+                            updateDots();
+                        }
+                    }
+                });
+            }
+    
+            function updateDots() {
+                const dots = dotsContainer.querySelectorAll('.dot');
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === currentIndex);
+                });
+            }
+    
+            function setupResizeObserver() {
+                let timeout;
+                window.addEventListener('resize', () => {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(updateLayout, 200);
+                });
+            }
+    
+            // Run on load
+            if (document.readyState === 'complete') init();
+            else window.addEventListener('load', init);
+    
+        })();
+    </script>
+</body>
+</html>
