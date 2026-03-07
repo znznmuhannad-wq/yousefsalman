@@ -293,6 +293,71 @@
       }
       .bts-track { animation: bts-scroll 60s linear infinite; display: flex; width: max-content; }
       .b3eed-section:hover .bts-track { animation-play-state: paused; }
+
+      /* --- RESPONSIVE REFACTORING FIXES --- */
+      html, body {
+        overflow-x: hidden !important;
+        width: 100%;
+        max-width: 100vw;
+        -webkit-text-size-adjust: 100%;
+      }
+
+      @media (max-width: 767px) {
+        /* Task 1: Typography & Task 6: Hero Scaling */
+        h1.hero-anim {
+          font-size: clamp(3rem, 12vw, 4.5rem) !important;
+          line-height: 1.1;
+        }
+        .section-title {
+          font-size: clamp(2rem, 8vw, 3.5rem) !important;
+        }
+        .chapter-number {
+          font-size: clamp(3.5rem, 15vw, 5rem) !important;
+        }
+        
+        /* Task 2: Section Padding */
+        section {
+          padding-top: 3.5rem !important;
+          padding-bottom: 3.5rem !important;
+        }
+        #hero, #memories, #cinematic-portfolio {
+          padding-top: 0 !important;
+          padding-bottom: 0 !important;
+        }
+
+        /* Task 4: Fix B3EED Image Strip & Prevent Vertical Stacking */
+        .bts-track {
+          animation: none !important;
+          overflow-x: auto !important;
+          width: 100% !important;
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+          padding-bottom: 1rem;
+        }
+        .bts-track .memory-item {
+          flex: 0 0 75vw !important;
+          scroll-snap-align: center;
+          height: auto !important;
+          aspect-ratio: 3/2;
+        }
+
+        /* Task 5: Image Rows Responsiveness (About Grid) */
+        .about-image-grid {
+          display: flex !important;
+          flex-wrap: nowrap;
+          overflow-x: auto !important;
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+          padding-bottom: 1rem;
+        }
+        .about-image-grid > div {
+          display: block !important;
+          flex: 0 0 60vw !important;
+          scroll-snap-align: center;
+          height: auto !important;
+          aspect-ratio: 1/1;
+        }
+      }
     </style>
 </head>
 <body class="antialiased selection:bg-[#E7A51A] selection:text-black">
@@ -340,7 +405,7 @@
         <div class="scanline z-10"></div>
         <div class="spotlight top-[-200px] left-[30%]"></div>
         
-        <div class="z-20 text-center px-4">
+        <div class="z-20 text-center px-4 w-full">
             <div class="light-leak light-orange" style="top:-200px; right:-200px;"></div>
             <div class="light-leak light-yellow" style="bottom:-200px; left:-200px;"></div>
 
@@ -405,7 +470,7 @@
                 </div>
             </div>
             
-            <div class="w-full mt-16 grid grid-cols-4 md:grid-cols-7 gap-2 md:gap-4 gsap-fade-up">
+            <div class="about-image-grid w-full mt-16 grid grid-cols-4 md:grid-cols-7 gap-2 md:gap-4 gsap-fade-up">
                 <div class="aspect-square border border-[rgba(255,255,255,0.08)] overflow-hidden rounded-md cursor-pointer group">
                     <img src="https://i.ibb.co/4RnwdLgQ/IMG-2204-JPG.jpg" class="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 group-hover:scale-110 transition-all duration-700">
                 </div>
@@ -589,19 +654,20 @@
             </p>
             
             <div class="bts-track gap-4 md:gap-6 px-4">
-                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/p6g9s8SV/IMG-1344.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
-                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/jk5vmrsb/IMG-1347.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
-                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/ksKsyQpL/IMG-1349.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
-                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/N2NryCfT/IMG-1351.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
-                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/qLf6Nvxp/IMG-1346.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
-                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/nqWW8HtL/IMG-1355.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                <!-- Task 4 Fix: Removed grayscale filter classes to display full color -->
+                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/p6g9s8SV/IMG-1344.jpg" class="w-full h-full object-cover"></div>
+                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/jk5vmrsb/IMG-1347.jpg" class="w-full h-full object-cover"></div>
+                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/ksKsyQpL/IMG-1349.jpg" class="w-full h-full object-cover"></div>
+                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/N2NryCfT/IMG-1351.jpg" class="w-full h-full object-cover"></div>
+                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/qLf6Nvxp/IMG-1346.jpg" class="w-full h-full object-cover"></div>
+                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/nqWW8HtL/IMG-1355.jpg" class="w-full h-full object-cover"></div>
                 
-                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/p6g9s8SV/IMG-1344.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
-                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/jk5vmrsb/IMG-1347.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
-                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/ksKsyQpL/IMG-1349.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
-                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/N2NryCfT/IMG-1351.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
-                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/qLf6Nvxp/IMG-1346.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
-                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/nqWW8HtL/IMG-1355.jpg" class="w-full h-full object-cover grayscale brightness-75 contrast-125"></div>
+                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/p6g9s8SV/IMG-1344.jpg" class="w-full h-full object-cover"></div>
+                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/jk5vmrsb/IMG-1347.jpg" class="w-full h-full object-cover"></div>
+                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/ksKsyQpL/IMG-1349.jpg" class="w-full h-full object-cover"></div>
+                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/N2NryCfT/IMG-1351.jpg" class="w-full h-full object-cover"></div>
+                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/qLf6Nvxp/IMG-1346.jpg" class="w-full h-full object-cover"></div>
+                <div class="memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm"><img src="https://i.ibb.co/nqWW8HtL/IMG-1355.jpg" class="w-full h-full object-cover"></div>
             </div>
         </div>
     </section>
@@ -1017,7 +1083,8 @@
         });
 
         // 3. Chapter Number Parallax
-        const chapters = gsap.utils.toArray(".chapter-number");
+        // TASK 3 FIX: Commented out to lock section numbers
+        /* const chapters = gsap.utils.toArray(".chapter-number");
         chapters.forEach((num) => {
             gsap.to(num, {
                 scrollTrigger: {
@@ -1030,7 +1097,8 @@
                 opacity: 0.8,
                 ease: "none"
             });
-        });
+        }); 
+        */
 
         // 4. Smooth Scroll for Anchor Links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
