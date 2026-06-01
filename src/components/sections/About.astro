@@ -1,0 +1,50 @@
+---
+import SectionHeader from '../ui/SectionHeader.astro';
+import Icon from '../ui/Icon.astro';
+import { aboutPortrait, aboutParagraphs, aboutGallery } from '../../data/about';
+---
+<section id="about" class="min-h-screen w-full flex flex-col items-center justify-center bg-[#0A0A0A] py-16 md:py-20 relative">
+  <div class="light-leak light-yellow" style="top:-250px;right:-200px"></div>
+
+  <SectionHeader number="01" title="ABOUT" />
+
+  <div class="container mx-auto px-5 md:px-12 mt-6">
+    <div class="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+      <div class="gsap-reveal-left order-2 md:order-1">
+        <div class="spotlight" style="top:-200px;left:30%"></div>
+
+        <div class="flex flex-col gap-6 text-gray-300 text-lg md:text-xl lg:text-2xl font-light leading-relaxed">
+          {aboutParagraphs.map((p) => <p set:html={p} />)}
+        </div>
+
+        <div class="mt-6 md:mt-12 flex items-center gap-4 text-xs font-mono-code text-white/55 border-t border-[rgba(255,255,255,0.08)] pt-8">
+          <Icon id="i-map-pin" class="w-4 h-4 text-[#E7A51A]" />
+          <span class="tracking-widest uppercase">CURRENTLY : DUBAI - UAE</span>
+        </div>
+      </div>
+
+      <div class="order-1 md:order-2 flex justify-center">
+        <div class="relative w-full max-w-md aspect-[3/4] rounded-lg overflow-hidden gsap-reveal-right shadow-2xl border border-[rgba(255,255,255,0.08)]">
+          <div class="absolute inset-0 bg-[#E7A51A]/5 mix-blend-overlay z-10"></div>
+          <img src={aboutPortrait.src}
+               alt={aboutPortrait.alt}
+               loading="lazy" decoding="async"
+               width="600" height="800"
+               class="w-full h-full object-cover object-center transition-all duration-1000" />
+          <div class="absolute z-20" style="bottom:1.5rem;left:1.5rem">
+            <p class="font-handwriting text-white text-4xl drop-shadow-md">Yousef Salman</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PERF: gallery images get loading="lazy", decoding="async", explicit w/h. -->
+    <div class="about-image-grid w-full mt-16 grid grid-cols-4 md:grid-cols-7 gap-2 md:gap-4 gsap-fade-up">
+      {aboutGallery.map((img) => (
+        <div class={`aspect-square border border-[rgba(255,255,255,0.08)] overflow-hidden rounded-md cursor-pointer group${img.visibility ? ' ' + img.visibility : ''}`}>
+          <img src={img.src} loading="lazy" decoding="async" width="300" height="300" alt="" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,39 @@
+---
+import MemoryItem from '../ui/MemoryItem.astro';
+import { memoryRows } from '../../data/memories';
+---
+<section id="memories" class="relative h-screen bg-[#050505] overflow-hidden flex items-center justify-center">
+  <div class="absolute inset-0 memory-overlay-vignette z-20 pointer-events-none"></div>
+  <div class="absolute inset-0 bg-black/40 z-20 pointer-events-none"></div>
+
+  <div class="absolute z-30 flex flex-col items-center pointer-events-none text-center px-4 w-full">
+    <span class="chapter-number text-5xl md:text-7xl opacity-40">06</span>
+    <h2 class="text-4xl sm:text-5xl md:text-6xl text-white font-montserrat font-black uppercase tracking-[0.2em] drop-shadow-[0_0_30px_rgba(255,255,255,0.15)] mix-blend-overlay mt-2">
+      MEMORIES
+    </h2>
+    <p class="text-[#E7A51A] font-mono-code text-[10px] md:text-xs tracking-[0.5em] md:tracking-[1em] mt-6 uppercase font-bold">
+      THE ARCHIVE OF SCENES
+    </p>
+  </div>
+
+  <div class="absolute z-10 flex flex-col justify-center gap-4 md:gap-6" style="inset:-20%;transform:perspective(1200px) rotateX(15deg) rotateY(-8deg) rotateZ(-3deg) scale(1.05)">
+    {memoryRows.map((row) => (
+      <div class="memory-row flex w-max">
+        <div class={`flex animate-track-${row.direction} w-max`} style={row.durationOverride ? `animation-duration:${row.durationOverride}` : undefined}>
+          <div class="flex shrink-0 gap-4 md:gap-6 pr-4 md:pr-6">
+            {row.images.map((src) => <MemoryItem src={src} grayscale />)}
+          </div>
+          <div class="flex shrink-0 gap-4 md:gap-6 pr-4 md:pr-6" aria-hidden="true">
+            {row.images.map((src) => <MemoryItem src={src} grayscale />)}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div class="absolute z-30 text-center w-full" style="bottom:2.5rem">
+    <p class="font-mono-code text-[10px] text-[#E7A51A] tracking-[0.3em] uppercase animate-pulse drop-shadow-md">
+      HOVER TO REVEAL COLORS & PAUSE
+    </p>
+  </div>
+</section>

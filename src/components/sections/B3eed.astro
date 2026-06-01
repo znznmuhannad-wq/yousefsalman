@@ -1,0 +1,71 @@
+---
+import Icon from '../ui/Icon.astro';
+import MemoryItem from '../ui/MemoryItem.astro';
+import { btsImages } from '../../data/memories';
+---
+<section id="b3eed" class="min-h-screen w-full flex flex-col items-center justify-center bg-[#0A0A0A] relative border-y border-[rgba(255,255,255,0.08)] overflow-hidden py-16 md:py-20 b3eed-section">
+
+  <div class="b3eed-sweep"></div>
+
+  <div class="section-header relative z-10">
+    <span class="chapter-number text-5xl md:text-7xl opacity-40">05</span>
+    <h2 class="section-title text-4xl sm:text-5xl md:text-6xl text-[#E7A51A]">B3EED</h2>
+  </div>
+
+  <div class="container mx-auto px-5 md:px-12 grid md:grid-cols-2 gap-10 md:gap-16 items-center relative z-10 mt-6">
+    <div class="relative group cursor-pointer gsap-scale-in order-2 md:order-1 max-w-sm mx-auto md:max-w-none w-full">
+      <div class="absolute bg-gradient-to-r from-[#E7A51A]/30 to-transparent rounded-lg opacity-40" style="inset:-0.25rem;filter:blur(4px)"></div>
+      <div class="relative aspect-[3/4] bg-black rounded-lg border border-[rgba(255,255,255,0.08)] overflow-hidden flex items-center justify-center shadow-2xl glass-card">
+        <img src="https://i.ibb.co/KpLfgm5q/Whats-App-Image-2025-12-05-at-12-07-20-AM.jpg"
+             loading="lazy" decoding="async"
+             width="600" height="800"
+             alt="B3EED film poster"
+             class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent z-10"></div>
+        <div class="absolute z-20" style="bottom:2rem;left:0;width:100%;display:flex;justify-content:center">
+          <div class="flex flex-col items-center">
+            <Icon id="i-film" class="w-8 h-8 text-[#E7A51A] mb-2" />
+            <span class="text-[10px] font-mono-code text-[#E7A51A] uppercase tracking-[0.2em] font-bold">Graduation Film</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gsap-fade-up order-1 md:order-2">
+      <div class="mb-8 border-l-2 border-[#E7A51A]/60 pl-6 py-2">
+        <p class="text-[10px] md:text-xs text-[#E7A51A] font-mono-code tracking-[0.4em] uppercase mb-2">DIRECTED & SHOT BY YOUSEF SALMAN</p>
+        <h3 class="text-xl md:text-2xl text-white font-montserrat font-bold tracking-widest uppercase">A Director's Genesis</h3>
+      </div>
+
+      <div class="flex flex-col gap-6 text-base md:text-lg text-white/80 font-light leading-relaxed mb-12 max-w-prose">
+        <p>"B3EED" wasn't just my graduation project. It was the film I carried from the very first idea all the way to the final frame.</p>
+        <p>I chose to take full control of it—directing it, shooting it, and shaping every moment behind the camera.</p>
+        <p>Every long night, every challenge on set, every decision… it all became part of the story.</p>
+        <p class="text-[#E7A51A] italic border-l border-[rgba(255,255,255,0.08)] bg-white/5 backdrop-blur-sm pl-4 py-3 mt-4">
+          This film became more than a project for me. It became proof that the director inside me was finally ready to speak.
+        </p>
+      </div>
+
+      <a href="#" class="inline-flex items-center gap-4 px-10 py-5 border-2 border-[rgba(255,255,255,0.08)] bg-[rgba(20,20,20,0.4)] backdrop-blur-md text-[#E7A51A] font-mono-code text-sm md:text-base tracking-[0.2em] uppercase hover:bg-[#E7A51A] hover:text-black transition-all duration-300">
+        <Icon id="i-play" class="w-5 h-5" />
+        Watch Trailer
+      </a>
+    </div>
+  </div>
+
+  <div class="w-full mt-24 overflow-hidden relative border-t border-[rgba(255,255,255,0.08)] pt-12 z-10">
+    <div class="absolute inset-y-0 left-0 z-10 pointer-events-none" style="width:6rem;background:linear-gradient(to right,#0A0A0A,transparent)"></div>
+    <div class="absolute inset-y-0 right-0 z-10 pointer-events-none" style="width:6rem;background:linear-gradient(to left,#0A0A0A,transparent)"></div>
+
+    <p class="text-center font-mono-code text-[10px] text-white/55 tracking-[0.5em] mb-8 uppercase font-bold px-4">
+      <span class="text-[#E7A51A]">Behind The Scenes</span> — The Making of B3EED
+    </p>
+
+    <!-- PERF: BTS strip — lazy-loaded images; the animation auto-pauses via
+         IntersectionObserver. Rendered twice for the seamless loop. -->
+    <div class="bts-track gap-4 md:gap-6 px-4" style="gap:1rem">
+      {btsImages.map((src) => <MemoryItem src={src} shrink />)}
+      {btsImages.map((src) => <MemoryItem src={src} shrink ariaHidden />)}
+    </div>
+  </div>
+</section>

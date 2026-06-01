@@ -1,0 +1,11 @@
+---
+/** Renders a reference to a <symbol> from the IconSprite. */
+interface Props {
+  /** Symbol id without the leading hash, e.g. "i-camera". */
+  id: string;
+  /** Utility classes for sizing/colour, e.g. "w-4 h-4 text-[#E7A51A]". */
+  class?: string;
+}
+const { id, class: className = '' } = Astro.props;
+---
+<svg class={className} aria-hidden="true"><use href={`#${id}`} /></svg>

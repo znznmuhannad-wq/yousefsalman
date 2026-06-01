@@ -1,0 +1,18 @@
+---
+/**
+ * Shared section header: a large outlined chapter number above the title.
+ * Used by About, Education, Skills, Filmography and Contact.
+ */
+interface Props {
+  /** Two-digit chapter number, e.g. "01". */
+  number: string;
+  title: string;
+  /** Accent the title in the brand colour instead of white. */
+  accentTitle?: boolean;
+}
+const { number, title, accentTitle = false } = Astro.props;
+---
+<div class="section-header">
+  <span class="chapter-number text-5xl md:text-7xl opacity-40">{number}</span>
+  <h2 class={`section-title text-4xl sm:text-5xl md:text-6xl ${accentTitle ? 'text-[#E7A51A]' : 'text-white'}`}>{title}</h2>
+</div>

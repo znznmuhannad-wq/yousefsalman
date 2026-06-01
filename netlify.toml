@@ -1,0 +1,15 @@
+# Netlify build configuration for the Astro static build.
+# Previously Netlify served the root index.html directly with no build step.
+# Now it runs `astro build` and publishes the generated `dist/` directory.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Long-cache the hashed, immutable assets Astro emits under /_astro/.
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

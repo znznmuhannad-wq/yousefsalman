@@ -1,0 +1,64 @@
+---
+import Icon from '../ui/Icon.astro';
+import { contact, social } from '../../data/site';
+---
+<section id="contact" class="min-h-screen w-full flex flex-col items-center justify-center bg-[#0A0A0A] relative py-16 md:py-20 border-t border-[rgba(255,255,255,0.08)]">
+  <div class="container mx-auto px-5 md:px-12">
+    <div class="max-w-5xl mx-auto">
+
+      <div class="section-header">
+        <span class="chapter-number text-5xl md:text-7xl opacity-40">08</span>
+        <h2 class="section-title text-4xl sm:text-5xl md:text-6xl text-white">CONTACT</h2>
+        <p class="font-mono-code text-xs md:text-sm text-white/40 tracking-[0.4em] uppercase mt-6">Ready for the next scene</p>
+      </div>
+
+      <div class="glass-card p-10 md:p-16 rounded-3xl relative w-full mt-10">
+        <div class="inner-glow"></div>
+        <div class="grid md:grid-cols-2 gap-12 md:gap-20 items-start relative z-10">
+          <div class="flex flex-col gap-12 gsap-reveal-left">
+
+            <div>
+              <p class="text-[10px] font-mono-code text-[#E7A51A] mb-4 tracking-[0.2em] uppercase font-bold">Location</p>
+              <div class="flex items-center gap-3">
+                <Icon id="i-globe" class="w-5 h-5 text-[#E7A51A] opacity-80" />
+                <h3 class="text-sm md:text-base text-white font-montserrat font-bold tracking-[0.15em] uppercase">
+                  {contact.locationLabel} <span class="mx-2 text-white/30 font-light">|</span> {contact.availability}
+                </h3>
+              </div>
+            </div>
+
+            <div>
+              <p class="text-[10px] font-mono-code text-[#E7A51A] mb-4 tracking-[0.2em] uppercase font-bold">Phone</p>
+              <a href={contact.phoneHref} class="text-2xl md:text-3xl text-white font-montserrat font-bold tracking-widest uppercase hover:text-[#E7A51A] transition-colors">{contact.phone}</a>
+            </div>
+            <div>
+              <p class="text-[10px] font-mono-code text-[#E7A51A] mb-4 tracking-[0.2em] uppercase font-bold">Email</p>
+              <a href={contact.emailHref} class="text-lg md:text-xl text-white font-mono-code hover:text-[#E7A51A] transition-colors break-words">{contact.email}</a>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-8 md:gap-12 gsap-reveal-right">
+            <div class="flex flex-col gap-8">
+              <a href={social.instagram.url} target="_blank" rel="noopener" class="flex items-center gap-6 group cursor-pointer">
+                <div class="w-14 h-14 flex items-center justify-center border border-[rgba(255,255,255,0.08)] group-hover:bg-[#E7A51A] group-hover:border-[#E7A51A] transition-all rounded-lg bg-[rgba(255,255,255,0.02)]">
+                  <Icon id="i-instagram" class="w-6 h-6 text-white transition-colors group-hover:text-black" />
+                </div>
+                <span class="font-mono-code text-sm md:text-base text-white/55 group-hover:text-white transition-colors uppercase tracking-widest">{social.instagram.handle}</span>
+              </a>
+              <a href={social.youtube.url} target="_blank" rel="noopener" class="flex items-center gap-6 group cursor-pointer">
+                <div class="w-14 h-14 flex items-center justify-center border border-[rgba(255,255,255,0.08)] group-hover:bg-[#E7A51A] group-hover:border-[#E7A51A] transition-all rounded-lg bg-[rgba(255,255,255,0.02)]">
+                  <Icon id="i-youtube" class="w-6 h-6 text-white transition-colors group-hover:text-black" />
+                </div>
+                <span class="font-mono-code text-sm md:text-base text-white/55 group-hover:text-white transition-colors uppercase tracking-widest">{social.youtube.label}</span>
+              </a>
+            </div>
+            <div class="mt-4 pt-10 border-t border-[rgba(255,255,255,0.08)]">
+              <p class="font-handwriting text-5xl text-white drop-shadow-md">Yousef Salman</p>
+              <p class="font-mono-code text-[10px] text-white/40 uppercase mt-4 tracking-widest font-bold">Available for Worldwide Projects</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
