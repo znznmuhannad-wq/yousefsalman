@@ -1,0 +1,22 @@
+---
+import { Image } from 'astro:assets';
+import { localImage } from '../../assets/images';
+
+/** A single image tile used in the Memories marquees and the B3EED BTS strip. */
+interface Props {
+  src: string;
+  /** Apply the grayscale filter (memories rows do; BTS strip does not). */
+  grayscale?: boolean;
+  /** Add shrink-0 (used by the BTS flex strip). */
+  shrink?: boolean;
+  /** Mark the <img> aria-hidden (duplicate copies in the seamless loop). */
+  ariaHidden?: boolean;
+}
+const { src, grayscale = false, shrink = false, ariaHidden = false } = Astro.props;
+const itemClass = `memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm${shrink ? ' shrink-0' : ''}`;
+const imgClass = `w-full h-full object-cover${grayscale ? ' grayscale' : ''}`;
+const img = localImage(src)!;
+---
+<div class={itemClass}>
+  <Image src={img} loading="lazy" decoding="async" width={640} height={416} format="webp" quality={70} alt="" aria-hidden={ariaHidden ? 'true' : undefined} class={imgClass} />
+</div>

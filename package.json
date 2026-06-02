@@ -1,0 +1,28 @@
+{
+  "name": "ys-cut-portfolio",
+  "version": "1.0.0",
+  "description": "The Y.S Cut — official portfolio of filmmaker Yousef Salman.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@fontsource/anton": "^5.2.7",
+    "@fontsource/caveat": "^5.2.8",
+    "@fontsource/inter": "^5.2.8",
+    "@fontsource/montserrat": "^5.2.8",
+    "@fontsource/oswald": "^5.2.8",
+    "@fontsource/space-mono": "^5.2.9",
+    "astro": "^5.5.0",
+    "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "typescript": "^5.7.3"
+  }
+}

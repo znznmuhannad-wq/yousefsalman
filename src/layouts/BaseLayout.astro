@@ -1,0 +1,95 @@
+---
+// PERF: Self-hosted fonts (latin subsets, font-display:swap) replace the
+// render-blocking Google Fonts <link>. Astro bundles these woff2 files,
+// fingerprints them and serves them from the same origin — no second-domain
+// round trip, no render-blocking external stylesheet.
+import '@fontsource/anton/latin-400.css';
+import '@fontsource/inter/latin-400.css';
+import '@fontsource/inter/latin-700.css';
+import '@fontsource/montserrat/latin-900.css';
+import '@fontsource/oswald/latin-300.css';
+import '@fontsource/oswald/latin-500.css';
+import '@fontsource/space-mono/latin-400.css';
+import '@fontsource/space-mono/latin-700.css';
+import '@fontsource/caveat/latin-700.css';
+// Preload the two fonts used by the largest above-the-fold text (Anton hero
+// title, Montserrat section titles) to stabilise LCP and avoid swap-induced CLS.
+import antonWoff2 from '@fontsource/anton/files/anton-latin-400-normal.woff2?url';
+import montserratWoff2 from '@fontsource/montserrat/files/montserrat-latin-900-normal.woff2?url';
+
+import '../styles/global.css';
+import IconSprite from '../components/IconSprite.astro';
+import { site, personJsonLd } from '../data/site';
+import { hero } from '../data/hero';
+import { getHeroImage } from '../assets/images';
+
+// Same transform as Hero.astro → identical hashed URL → a single preloaded request.
+const heroImg = await getHeroImage(hero.bgImage);
+const heroPreloadSrc = heroImg?.src ?? hero.bgImage;
+
+/**
+ * Document shell: head metadata, fonts, structured data, the global stylesheet,
+ * the fixed film-grain overlay and the inline SVG icon sprite. Page content is
+ * provided via <slot />. Compiles to static HTML with a single deferred module.
+ */
+const canonical = new URL(Astro.url.pathname, site.url).href;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- A11Y: dropped maximum-scale/user-scalable=no so pinch-zoom works (WCAG 1.4.4). -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{site.title}</title>
+  <meta name="description" content={site.description} />
+  <link rel="canonical" href={canonical} />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content={site.ogTitle} />
+  <meta property="og:description" content={site.ogDescription} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={site.url} />
+  <meta property="og:image" content={site.ogImage} />
+
+  <!-- SEO: Twitter card (new) -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={site.ogTitle} />
+  <meta name="twitter:description" content={site.ogDescription} />
+  <meta name="twitter:image" content={site.ogImage} />
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicons/16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicons/32.png" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicons/48.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicons/192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/180.png" />
+
+  <!-- PERF: Preload the optimized, self-hosted hero image (LCP) with high priority. -->
+  <link rel="preload" as="image" href={heroPreloadSrc} fetchpriority="high" />
+
+  <!-- PERF: Preload the self-hosted fonts behind the largest above-the-fold text. -->
+  <link rel="preload" as="font" type="font/woff2" href={antonWoff2} crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href={montserratWoff2} crossorigin />
+
+  <script type="application/ld+json" set:html={JSON.stringify(personJsonLd)} is:inline />
+
+  <!-- A11Y: with JS disabled, reveal-on-scroll elements must remain visible. -->
+  <noscript>
+    <style>
+      .gsap-reveal-left,.gsap-reveal-right,.gsap-fade-up,.gsap-scale-in{
+        opacity:1 !important;transform:none !important;
+      }
+    </style>
+  </noscript>
+</head>
+<body>
+  <div class="film-grain" aria-hidden="true"></div>
+
+  <IconSprite />
+
+  <slot />
+
+  <script>
+    import '../scripts/main.ts';
+  </script>
+</body>
+</html>

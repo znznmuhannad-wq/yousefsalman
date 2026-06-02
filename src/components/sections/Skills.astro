@@ -1,0 +1,16 @@
+---
+import SectionHeader from '../ui/SectionHeader.astro';
+import SkillCard from '../ui/SkillCard.astro';
+import { skills } from '../../data/skills';
+---
+<section id="skills" class="py-16 md:py-20 bg-[#0A0A0A] relative border-b border-[rgba(255,255,255,0.08)]">
+  <div class="skills-grain"></div>
+
+  <SectionHeader number="03" title="SKILLS" />
+
+  <div class="container mx-auto px-5 md:px-12 relative z-10 mt-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {skills.map((skill, i) => <SkillCard skill={skill} delay={i * 100} />)}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,18 @@
+---
+import FilmographyColumn from '../ui/FilmographyColumn.astro';
+import { filmography } from '../../data/filmography';
+---
+<section id="portfolio" class="py-16 md:py-20 bg-[#0A0A0A] relative border-t border-[rgba(255,255,255,0.08)]">
+
+  <div class="section-header">
+    <span class="chapter-number text-5xl md:text-7xl opacity-40">07</span>
+    <h2 class="section-title text-4xl sm:text-5xl md:text-6xl text-white">FULL FILMOGRAPHY</h2>
+    <div class="w-24 h-[1px] bg-[rgba(255,255,255,0.08)] mx-auto mt-10" style="background-color:rgba(255,255,255,0.08)"></div>
+  </div>
+
+  <div class="container mx-auto px-5 md:px-12 mt-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
+      {filmography.map((column, i) => <FilmographyColumn column={column} delay={i * 100} />)}
+    </div>
+  </div>
+</section>

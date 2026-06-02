@@ -1,0 +1,44 @@
+---
+import { Image } from 'astro:assets';
+import SectionHeader from '../ui/SectionHeader.astro';
+import { localImage } from '../../assets/images';
+
+const eduImage = 'https://i.ibb.co/pr3W1dzy/Whats-App-Image-2025-12-05-at-12-07-19-AM-1.jpg';
+---
+<section id="graduation" class="min-h-screen w-full flex flex-col items-center justify-center bg-[#050505] relative overflow-hidden py-16 md:py-20 border-y border-[rgba(255,255,255,0.08)]">
+
+  <SectionHeader number="02" title="EDUCATION" />
+
+  <div class="container mx-auto px-5 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center mt-6">
+    <div class="lg:col-span-5 relative w-full aspect-[3/4] rounded-lg overflow-hidden gsap-reveal-left border border-[rgba(255,255,255,0.08)] shadow-2xl mx-auto max-w-sm lg:max-w-full">
+      <Image src={localImage(eduImage)!}
+           loading="lazy" decoding="async"
+           width={800} format="webp" quality={78}
+           alt=""
+           class="w-full h-full object-cover object-center" style="object-position:center 30%" />
+      <div class="absolute inset-0 bg-gradient-to-t" style="background-image:linear-gradient(to top,rgba(0,0,0,0.9),transparent,rgba(0,0,0,0.2))"></div>
+      <div class="absolute z-20" style="bottom:2rem;left:2rem">
+        <div class="bg-[#E7A51A] px-4 py-2 mb-2 inline-block">
+          <p class="font-mono-code text-black text-[10px] uppercase font-bold tracking-widest">Class of 2023</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="lg:col-span-7 glass-card p-10 md:p-14 rounded-2xl relative gsap-reveal-right">
+      <div class="inner-glow"></div>
+      <div class="flex flex-col gap-8 relative z-10">
+        <div>
+          <h4 class="text-[#E7A51A] font-mono-code text-xs tracking-[0.2em] uppercase mb-4">SAE INSTITUTE AMMAN</h4>
+          <h3 class="text-2xl md:text-3xl text-white font-montserrat font-bold tracking-[0.1em] uppercase">BACHELOR'S DEGREE</h3>
+          <p class="text-lg text-white/55 font-light mt-2">Digital Filmmaking</p>
+          <p class="text-sm font-mono-code text-white/40 mt-6 tracking-widest">2019 – 2023</p>
+        </div>
+        <div class="p-6 border-l border-[rgba(255,255,255,0.08)] bg-white/5">
+          <p class="text-lg text-white/55 italic font-light leading-relaxed">
+            "The graduation wrap marked the final cut of the student era and the beginning of the professional narrative."
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

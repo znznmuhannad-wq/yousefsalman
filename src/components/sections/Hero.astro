@@ -1,0 +1,48 @@
+---
+import Icon from '../ui/Icon.astro';
+import { hero } from '../../data/hero';
+import { getHeroImage } from '../../assets/images';
+
+// Optimized, self-hosted LCP image. Identical transform params to the <head>
+// preload in BaseLayout, so both resolve to the same hashed file (one request).
+const heroImg = await getHeroImage(hero.bgImage);
+const heroSrc = heroImg?.src ?? hero.bgImage;
+---
+<!-- PERF: Hero background is a real <img> with fetchpriority="high" + preload
+     (see BaseLayout) so it is elevated as the LCP element. -->
+<section id="hero" class="h-screen w-full flex flex-col justify-center items-center relative overflow-hidden bg-[#050505]">
+  <img id="hero-bg"
+       src={heroSrc}
+       alt=""
+       fetchpriority="high"
+       decoding="async"
+       width="1920" height="1080"
+       style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.3;transform:scale(1.05);z-index:0" />
+  <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-transparent z-10"></div>
+  <div class="absolute inset-0 z-10 pointer-events-none" style="background:radial-gradient(circle at center,transparent 20%,#050505 100%)"></div>
+
+  <div class="scanline z-10"></div>
+  <div class="spotlight" style="top:-200px;left:30%"></div>
+
+  <div class="z-20 text-center px-4 w-full relative">
+    <div class="light-leak light-orange" style="top:-200px;right:-200px"></div>
+    <div class="light-leak light-yellow" style="bottom:-200px;left:-200px"></div>
+
+    <h2 class="font-credits text-white/60 tracking-[0.5em] text-lg md:text-xl mb-4 opacity-0 hero-anim" style="transform:translateY(20px)">{hero.kicker}</h2>
+    <h1 class="text-7xl sm:text-8xl md:text-[9rem] lg:text-[13rem] mb-2 opacity-0 hero-anim leading-none text-[#E7A51A] tracking-wider" style="font-family:'Anton',sans-serif">{hero.title}</h1>
+
+    <div class="flex flex-col md:flex-row gap-4 md:gap-12 justify-center items-center mt-6 md:mt-12 opacity-0 hero-anim" style="transform:translateY(40px)">
+      {hero.roles.map((role) => (
+        <div class="flex items-center gap-2 group">
+          <span class="w-8 h-[1px] bg-[#E7A51A] group-hover:w-12 transition-all" style="display:inline-block"></span>
+          <p class="font-mono-code text-sm md:text-base uppercase tracking-[0.4em] text-white/55">{role}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div class="absolute z-20 opacity-0 hero-anim text-center" style="bottom:2.5rem;left:50%;transform:translateX(-50%)">
+    <p class="font-credits text-[10px] tracking-widest mb-4 text-white/40">{hero.scrollHint}</p>
+    <Icon id="i-chevron-down" class="w-6 h-6 animate-bounce text-[#E7A51A] mx-auto" />
+  </div>
+</section>
