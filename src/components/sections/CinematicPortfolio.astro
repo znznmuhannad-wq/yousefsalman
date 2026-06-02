@@ -3,7 +3,22 @@
  * "Prime Portfolio" — the draggable cinematic carousel. The viewport is
  * populated client-side by src/scripts/carousel.ts (GSAP + Draggable are
  * lazy-loaded from the CDN only when the section nears the viewport).
+ *
+ * Card images are optimized to WebP at build time here and passed to the
+ * client script as JSON, so the lazily-built cards still use small images.
  */
+import { getImage } from 'astro:assets';
+import { carouselProjects } from '../../data/projects';
+import { localImage } from '../../assets/images';
+
+const projects = await Promise.all(
+  carouselProjects.map(async (p) => {
+    const md = localImage(p.img);
+    const opt = md ? await getImage({ src: md, width: 840, format: 'webp', quality: 76 }) : null;
+    return { ...p, img: opt?.src ?? p.img };
+  }),
+);
+const carouselJson = JSON.stringify(projects);
 ---
 <section class="cinematic-portfolio-wrapper" id="cinematic-portfolio">
   <div class="ambient-glow"></div>
@@ -16,4 +31,6 @@
   <main class="viewport" id="portfolio-viewport"></main>
   <div class="nav-dots" id="portfolio-dots"></div>
   <div class="scroll-hint" id="portfolio-hint"></div>
+  <!-- Build-time, optimized card data consumed by src/scripts/carousel.ts -->
+  <script type="application/json" id="carousel-data" is:inline set:html={carouselJson}></script>
 </section>

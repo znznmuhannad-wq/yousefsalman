@@ -8,8 +8,18 @@
  * Logic is preserved verbatim from the original inline implementation; the
  * project data now comes from the typed `carouselProjects` module.
  */
-import { carouselProjects } from '../data/projects';
 import type { CarouselProject } from '../types';
+
+/** Read the build-time optimized card data embedded by CinematicPortfolio.astro. */
+function readCarouselData(): CarouselProject[] {
+  const el = document.getElementById('carousel-data');
+  if (!el?.textContent) return [];
+  try {
+    return JSON.parse(el.textContent) as CarouselProject[];
+  } catch {
+    return [];
+  }
+}
 
 // GSAP is loaded at runtime from the CDN, so it is untyped here.
 type Gsap = any;
@@ -67,7 +77,7 @@ export function initCarousel(): void {
   function runPortfolio(): void {
     const gsap = window.gsap as Gsap;
     const Draggable = window.Draggable as DraggableStatic;
-    const projectData: CarouselProject[] = carouselProjects;
+    const projectData: CarouselProject[] = readCarouselData();
 
     const viewport = document.getElementById('portfolio-viewport');
     const dotsContainer = document.getElementById('portfolio-dots');

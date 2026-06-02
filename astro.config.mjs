@@ -8,9 +8,10 @@ export default defineConfig({
   site: 'https://yousef-salman.com',
   output: 'static',
   build: {
-    // Inline small stylesheets/scripts into the HTML the way the original
-    // single-file site did, avoiding extra render-blocking requests.
-    inlineStylesheets: 'auto',
+    // Single-page site: inline ALL CSS into the HTML so there is no
+    // render-blocking external stylesheet request — improves mobile FCP/LCP.
+    // (Mirrors the original single-file site, which had its CSS inline.)
+    inlineStylesheets: 'always',
   },
   compressHTML: true,
 });

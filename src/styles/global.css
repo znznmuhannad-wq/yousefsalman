@@ -86,8 +86,11 @@ body{
 .pt-8{padding-top:2rem}.pt-10{padding-top:2.5rem}.pt-12{padding-top:3rem}.pb-4{padding-bottom:1rem}.pb-1{padding-bottom:0.25rem}.pl-4{padding-left:1rem}.pl-6{padding-left:1.5rem}.pr-4{padding-right:1rem}.pr-6{padding-right:1.5rem}
 .text-center{text-align:center}.text-right{text-align:right}
 .text-white{color:#fff}.text-black{color:#000}
-.text-white\/30{color:rgba(255,255,255,0.3)}
-.text-white\/40{color:rgba(255,255,255,0.4)}
+/* A11Y: raised from 0.3/0.4 → 0.6 so muted captions clear the WCAG AA 4.5:1
+   contrast minimum on the dark background (was ~2.9/3.8:1, now ~7:1).
+   Only these two text utilities were below AA; the muted aesthetic is preserved. */
+.text-white\/30{color:rgba(255,255,255,0.6)}
+.text-white\/40{color:rgba(255,255,255,0.6)}
 .text-white\/55{color:rgba(255,255,255,0.55)}
 .text-white\/60{color:rgba(255,255,255,0.6)}
 .text-white\/70{color:rgba(255,255,255,0.7)}

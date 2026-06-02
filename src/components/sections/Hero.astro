@@ -1,12 +1,18 @@
 ---
 import Icon from '../ui/Icon.astro';
 import { hero } from '../../data/hero';
+import { getHeroImage } from '../../assets/images';
+
+// Optimized, self-hosted LCP image. Identical transform params to the <head>
+// preload in BaseLayout, so both resolve to the same hashed file (one request).
+const heroImg = await getHeroImage(hero.bgImage);
+const heroSrc = heroImg?.src ?? hero.bgImage;
 ---
 <!-- PERF: Hero background is a real <img> with fetchpriority="high" + preload
      (see BaseLayout) so it is elevated as the LCP element. -->
 <section id="hero" class="h-screen w-full flex flex-col justify-center items-center relative overflow-hidden bg-[#050505]">
   <img id="hero-bg"
-       src={hero.bgImage}
+       src={heroSrc}
        alt=""
        fetchpriority="high"
        decoding="async"

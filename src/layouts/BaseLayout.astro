@@ -1,8 +1,31 @@
 ---
+// PERF: Self-hosted fonts (latin subsets, font-display:swap) replace the
+// render-blocking Google Fonts <link>. Astro bundles these woff2 files,
+// fingerprints them and serves them from the same origin — no second-domain
+// round trip, no render-blocking external stylesheet.
+import '@fontsource/anton/latin-400.css';
+import '@fontsource/inter/latin-400.css';
+import '@fontsource/inter/latin-700.css';
+import '@fontsource/montserrat/latin-900.css';
+import '@fontsource/oswald/latin-300.css';
+import '@fontsource/oswald/latin-500.css';
+import '@fontsource/space-mono/latin-400.css';
+import '@fontsource/space-mono/latin-700.css';
+import '@fontsource/caveat/latin-700.css';
+// Preload the two fonts used by the largest above-the-fold text (Anton hero
+// title, Montserrat section titles) to stabilise LCP and avoid swap-induced CLS.
+import antonWoff2 from '@fontsource/anton/files/anton-latin-400-normal.woff2?url';
+import montserratWoff2 from '@fontsource/montserrat/files/montserrat-latin-900-normal.woff2?url';
+
 import '../styles/global.css';
 import IconSprite from '../components/IconSprite.astro';
 import { site, personJsonLd } from '../data/site';
 import { hero } from '../data/hero';
+import { getHeroImage } from '../assets/images';
+
+// Same transform as Hero.astro → identical hashed URL → a single preloaded request.
+const heroImg = await getHeroImage(hero.bgImage);
+const heroPreloadSrc = heroImg?.src ?? hero.bgImage;
 
 /**
  * Document shell: head metadata, fonts, structured data, the global stylesheet,
@@ -34,27 +57,18 @@ const canonical = new URL(Astro.url.pathname, site.url).href;
   <meta name="twitter:description" content={site.ogDescription} />
   <meta name="twitter:image" content={site.ogImage} />
 
-  <link rel="icon" type="image/png" sizes="16x16" href="https://i.ibb.co/G6G6LZ4/16.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/4nKCGjsL/32.png" />
-  <link rel="icon" type="image/png" sizes="48x48" href="https://i.ibb.co/LXnxw0jD/48.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="https://i.ibb.co/GQLvSHjP/192.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/mrLrCwjk/42.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicons/16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicons/32.png" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicons/48.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicons/192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/180.png" />
 
-  <!-- PERF: Preconnect to image CDN for faster first image -->
-  <link rel="preconnect" href="https://i.ibb.co" crossorigin />
-  <link rel="dns-prefetch" href="https://i.ibb.co" />
+  <!-- PERF: Preload the optimized, self-hosted hero image (LCP) with high priority. -->
+  <link rel="preload" as="image" href={heroPreloadSrc} fetchpriority="high" />
 
-  <!-- PERF: Preload hero image with high priority for LCP -->
-  <link rel="preload" as="image" href={hero.bgImage} fetchpriority="high" />
-
-  <!-- PERF: One combined Google Fonts request, only the weights actually used.
-       font-display: swap prevents invisible text during load. -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@700&family=Inter:wght@400;700&family=Montserrat:wght@900&family=Oswald:wght@300;500&family=Space+Mono:wght@400;700&display=swap"
-    rel="stylesheet"
-  />
+  <!-- PERF: Preload the self-hosted fonts behind the largest above-the-fold text. -->
+  <link rel="preload" as="font" type="font/woff2" href={antonWoff2} crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href={montserratWoff2} crossorigin />
 
   <script type="application/ld+json" set:html={JSON.stringify(personJsonLd)} is:inline />
 

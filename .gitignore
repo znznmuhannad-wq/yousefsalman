@@ -13,3 +13,7 @@ npm-debug.log*
 .DS_Store
 .vscode/
 .idea/
+
+# local preview / audit artifacts
+.preview.log
+.lh-*.json

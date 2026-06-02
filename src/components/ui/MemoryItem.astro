@@ -1,4 +1,7 @@
 ---
+import { Image } from 'astro:assets';
+import { localImage } from '../../assets/images';
+
 /** A single image tile used in the Memories marquees and the B3EED BTS strip. */
 interface Props {
   src: string;
@@ -12,7 +15,8 @@ interface Props {
 const { src, grayscale = false, shrink = false, ariaHidden = false } = Astro.props;
 const itemClass = `memory-item w-48 md:w-80 h-32 md:h-52 rounded-sm${shrink ? ' shrink-0' : ''}`;
 const imgClass = `w-full h-full object-cover${grayscale ? ' grayscale' : ''}`;
+const img = localImage(src)!;
 ---
 <div class={itemClass}>
-  <img src={src} loading="lazy" decoding="async" width="320" height="208" alt="" aria-hidden={ariaHidden ? 'true' : undefined} class={imgClass} />
+  <Image src={img} loading="lazy" decoding="async" width={640} height={416} format="webp" quality={70} alt="" aria-hidden={ariaHidden ? 'true' : undefined} class={imgClass} />
 </div>
