@@ -10,9 +10,9 @@ export const aboutPortrait = {
  * inline <span> highlights) — rendered with set:html in the About component.
  */
 export const aboutParagraphs: string[] = [
-  'Experienced filmmaker and studio operator with a strong background in <span class="text-white font-bold">cinematography, directing, camera operating</span>, and visual storytelling.',
+  'Filmmaker with a strong background in <span class="text-white font-bold">cinematography, directing, camera operating</span>, and visual storytelling.',
   'Worked on <span class="text-[#E7A51A] font-bold">130+ projects</span>, including documentaries, TV commercials, music videos, and films across diverse production environments.',
-  'Skilled in studio operations, on-set collaboration, and delivering high quality visual content that enhances brand and narrative identity.',
+  'Skilled in on-set collaboration and delivering high quality visual content that enhances brand and narrative identity.',
 ];
 
 export interface AboutGalleryImage {

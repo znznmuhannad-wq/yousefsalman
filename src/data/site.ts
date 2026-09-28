@@ -5,7 +5,7 @@ export const site = {
   brand: 'THE Y.S CUT',
   title: 'The Y.S Cut | Yousef Salman Portfolio',
   description:
-    'Official portfolio of filmmaker Yousef Salman. Cinematography, directing, and visual storytelling projects including films, commercials, and Netflix productions.',
+    'Official portfolio of filmmaker Yousef Salman. Filmmaker work including films, commercials, and Netflix productions.',
   url: 'https://yousef-salman.com',
   ogTitle: 'Yousef Salman | Filmmaker Portfolio',
   ogDescription:
@@ -16,8 +16,9 @@ export const site = {
 export const contact = {
   locationLabel: 'Dubai Based',
   availability: 'Available Worldwide',
-  phone: '058 549 6699',
-  phoneHref: 'tel:0585496699',
+  phone: '+971 58 549 6699',
+  phoneHref: 'tel:+971585496699',
+  whatsappHref: 'https://wa.me/971585496699',
   email: 'yousef.salman971@gmail.com',
   emailHref: 'mailto:yousef.salman971@gmail.com',
 } as const;
