@@ -10,9 +10,9 @@ export const aboutPortrait = {
  * inline <span> highlights) — rendered with set:html in the About component.
  */
 export const aboutParagraphs: string[] = [
-  'Experienced filmmaker and studio operator with a strong background in <span class="text-white font-bold">cinematography, directing, camera operating</span>, and visual storytelling.',
+  'Experienced filmmaker with a strong background in <span class="text-white font-bold">cinematography, directing, camera operating</span>, and visual storytelling.',
   'Worked on <span class="text-[#E7A51A] font-bold">130+ projects</span>, including documentaries, TV commercials, music videos, and films across diverse production environments.',
-  'Skilled in studio operations, on-set collaboration, and delivering high quality visual content that enhances brand and narrative identity.',
+  'Skilled in on-set collaboration and delivering high quality visual content that enhances brand and narrative identity.',
 ];
 
 export interface AboutGalleryImage {
@@ -22,11 +22,11 @@ export interface AboutGalleryImage {
 }
 
 export const aboutGallery: AboutGalleryImage[] = [
-  { src: 'https://i.ibb.co/4RnwdLgQ/IMG-2204-JPG.jpg' },
+  { src: 'https://i.ibb.co/ZzXZv83W/IMG-9377-JPG.jpg' },
   { src: 'https://i.ibb.co/YBsZgCkJ/IMG-3909-JPG.jpg' },
   { src: 'https://i.ibb.co/x8SynJNd/IMG-8402-JPG.jpg', visibility: 'hidden sm:block' },
-  { src: 'https://i.ibb.co/j9QQxR9b/IMG-8533-JPG.jpg', visibility: 'hidden md:block' },
+  { src: 'https://i.ibb.co/zTSZsf1N/IMG-8852-JPG.jpg', visibility: 'hidden md:block' },
   { src: 'https://i.ibb.co/kgq6kcFd/IMG-8658-JPG.jpg', visibility: 'hidden md:block' },
-  { src: 'https://i.ibb.co/kV8kmkmJ/IMG-8849-JPG.jpg', visibility: 'hidden md:block' },
+  { src: 'https://i.ibb.co/3m7n3bB5/IMG-4969-JPG.jpg', visibility: 'hidden md:block' },
   { src: 'https://i.ibb.co/b5k1zNqz/IMG-9990-JPG.jpg' },
 ];

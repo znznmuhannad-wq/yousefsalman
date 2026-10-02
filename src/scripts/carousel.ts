@@ -1,8 +1,8 @@
 /**
  * Cinematic "Prime Portfolio" carousel.
  *
- * Lazy-loads GSAP core + Draggable from the CDN only when the user scrolls
- * within 500px of the section (saves ~40KB+ on initial load). On desktop it
+ * Lazy-loads the bundled GSAP core + Draggable (dynamic import, split into its
+ * own chunk) only when the user scrolls within 500px of the section. On desktop it
  * renders a 3D coverflow carousel; on smaller screens a draggable card stack.
  *
  * Logic is preserved verbatim from the original inline implementation; the
@@ -21,7 +21,7 @@ function readCarouselData(): CarouselProject[] {
   }
 }
 
-// GSAP is loaded at runtime from the CDN, so it is untyped here.
+// GSAP is loaded lazily and exposed on window for the carousel logic below.
 type Gsap = any;
 type DraggableStatic = any;
 declare global {
@@ -29,17 +29,6 @@ declare global {
     gsap?: Gsap;
     Draggable?: DraggableStatic;
   }
-}
-
-function loadScript(src: string): Promise<void> {
-  return new Promise((resolve, reject) => {
-    const s = document.createElement('script');
-    s.src = src;
-    s.async = true;
-    s.onload = () => resolve();
-    s.onerror = reject;
-    document.head.appendChild(s);
-  });
 }
 
 export function initCarousel(): void {
@@ -51,11 +40,14 @@ export function initCarousel(): void {
   function load(): void {
     if (loaderTriggered) return;
     loaderTriggered = true;
-    loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js')
-      .then(() => loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js'))
-      .then(() => runPortfolio())
+    Promise.all([import('gsap'), import('gsap/Draggable')])
+      .then(([g, d]) => {
+        window.gsap = g.gsap;
+        window.Draggable = d.Draggable;
+        runPortfolio();
+      })
       .catch(() => {
-        /* CDN unavailable — leave the static markup in place. */
+        /* Chunk failed to load — leave the static markup in place. */
       });
   }
 

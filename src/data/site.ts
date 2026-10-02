@@ -10,14 +10,15 @@ export const site = {
   ogTitle: 'Yousef Salman | Filmmaker Portfolio',
   ogDescription:
     'Official portfolio of filmmaker Yousef Salman. Cinematography, directing, and film projects.',
-  ogImage: 'https://i.ibb.co/XxDCkS4S/Whats-App-Image-2026-03-07-at-3-45-09-AM-2.jpg',
+  ogImage: 'https://yousef-salman.com/images/XxDCkS4S.jpg',
 } as const;
 
 export const contact = {
   locationLabel: 'Dubai Based',
   availability: 'Available Worldwide',
-  phone: '058 549 6699',
-  phoneHref: 'tel:0585496699',
+  phone: '+971 58 549 6699',
+  phoneHref: 'tel:+971585496699',
+  whatsappHref: 'https://wa.me/971585496699',
   email: 'yousef.salman971@gmail.com',
   emailHref: 'mailto:yousef.salman971@gmail.com',
 } as const;
